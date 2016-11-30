@@ -46,5 +46,9 @@ async def on_message(message):
 					module_msg += 'reloading "{}" failed, error is:```{}```\n'.format(i, e)
 			await client.send_message(message.channel, module_msg)
 	await on_msg.Msger(message, client).handle_msg()
+		
+async def main_task():
+	await client.login(bot_info['login'])
+	await client.connect()
 
 client.run(bot_info['login'])
