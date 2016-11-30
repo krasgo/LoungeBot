@@ -23,7 +23,7 @@ def on_ready():
 @client.event
 async def on_message(message):
 	# Reload the modules
-	if message.author.id == bot_info[owner] and message.content.startswith('/reload'):
+	if message.author.id == bot_info['owner'] and message.content.startswith('/reload'):
 		# Reload only select modules
 		arg_len = len(message.content.split())
 		if arg_len > 1:
@@ -48,7 +48,7 @@ async def on_message(message):
 	await on_msg.Msger(message, client).handle_msg()
 		
 async def main_task():
-	await client.login(bot_info[login])
+	await client.login(bot_info['login'])
 	await client.connect()
 
-client.run(bot_info[login])
+client.run(bot_info['login'])
