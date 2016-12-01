@@ -5,7 +5,7 @@ import json
 import sys
 import on_msg
 
-# Load bot info (contains login and owner)
+# Load bot info (contains login and owners)
 bot_info = None
 with open('bot_info.json') as f:
 	bot_info = json.load(f)
@@ -23,7 +23,6 @@ def on_ready():
 @client.event
 async def on_message(message):
 	# Reload the modules
-	if message.author.id == bot_info['owner'] and message.content.startswith('/reload'):
 		# Reload only select modules
 		arg_len = len(message.content.split())
 		if arg_len > 1:
