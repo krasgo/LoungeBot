@@ -17,7 +17,7 @@ class ECorpse:
 		welcome_message += '\n**Noun:** ' + self.users[0].mention
 		welcome_message += '\n**Verb:** ' + self.users[1].mention
 		welcome_message += '\n**Reason:** ' + self.users[2].mention
-		welcome_message += '\n' + '-' * 25 + '\nTo enter an answer, type `!ec your answer`'
+		welcome_message += '\n' + '-' * 25 + '\nTo enter an answer, type `/ec your answer`'
 		await client.send_message(message.channel, welcome_message)
 	
 	async def input_answer(self, message, client, user):
