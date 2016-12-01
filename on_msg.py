@@ -1,5 +1,7 @@
 import discord
 import asyncio
+import inspect
+import urllib.request
 import ec
 
 ec_game = None
@@ -23,18 +25,24 @@ class Msger:
 			await client.send_message(message.channel, 'pong!')
 
 		# Change profile icon
-		if args[0] == '/change_avatar':
-			if len(args) > 1:
-				try:
-					avatar_file = open(args[1], 'rb')
-					a = avatar_file.read()
+		if args[0] == '/chg_avatar':
+			try:
+				# Read from URL
+				if len(args) == 2:
+					a = urllib.request.urlopen(args[1]).read()
 					await client.edit_profile(avatar=a)
-					avatar_file.close()
-				except Exception as e:
-					error_msg = 'Error:\n```\n' + str(e) + '\n```'
-					await client.send_message(message.channel, error_msg)
-			else:
-				await client.send_message(message.channel, 'what do you expect me to change into?')
+					await client.send_message(message.channel, 'Avatar changed!')
+				# Read from computer hosting the bot
+				elif len(args) == 3 and args[1] == 'local':
+					with open(args[2], 'rb') as a:
+						await client.edit_profile(avatar=(a.read()))
+					await client.send_message(message.channel, 'Avatar changed!')
+				# You didn't do it right
+				else:
+					await client.send_message(message.channel, 'usage: /chg_avatar [local] url/file_path')
+			except Exception as e:
+				error_msg = 'Error:\n```\n' + str(e) + '\n```'
+				await client.send_message(message.channel, error_msg)
 		
 		# Exquisite Corpse
 		if args[0] == '/ec':
