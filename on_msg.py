@@ -24,7 +24,7 @@ class Msger:
 		
 		# Test the bot
 		if args[0] == '/ping':
-			await client.send_message(message.channel, 'meow! :adam:')
+			await client.send_message(message.channel, 'miaou !')
 		
 		bot_info = None
 		with open('bot_info.json') as f:
