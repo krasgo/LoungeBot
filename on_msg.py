@@ -21,7 +21,7 @@ class Msger:
 		
 		# Test the bot
 		if args[0] == '/ping':
-			await client.send_message(message.channel, 'pong!')
+			await client.send_message(message.channel, 'meow!')
 
 		# Change profile icon
 		if args[0] == '/chg_avatar':
