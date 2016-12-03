@@ -1,6 +1,9 @@
 import discord
 import asyncio
 import urllib.request
+import subprocess
+from subprocess import Popen
+import json
 import ec
 
 ec_game = None
@@ -22,6 +25,20 @@ class Msger:
 		# Test the bot
 		if args[0] == '/ping':
 			await client.send_message(message.channel, 'meow! :adam:')
+		
+		bot_info = None
+		with open('bot_info.json') as f:
+			bot_info = json.load(f)
+		# Do git pull (for our favorite feline)
+		if args[0] == '/pull' and message.author.id in bot_info['owners']:
+			try:
+				p = Popen(['git', 'pull'],
+				stdout=subprocess.PIPE,
+				stderr=subprocess.STDOUT)
+				
+				await client.send_message(message.channel, 'Ran git pull!')
+			except Exception as e:
+				await client.send_message(message.channel, 'Error:\n```\n' + str(e) + '```')
 
 		# Change profile icon
 		if args[0] == '/chg_avatar':
