@@ -46,4 +46,3 @@ class ECorpse:
 			end_message += self.answers[self.users[2]] + '```\n'
 			killme = True
 			await client.send_message(message.channel, end_message)
-
