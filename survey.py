@@ -34,3 +34,4 @@ class Survey:
                 "\n".join(self.answers) + "\n"
         self.running = False
         await client.send_message(message.channel, msg)
+        
