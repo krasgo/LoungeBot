@@ -36,7 +36,7 @@ async def on_message(message):
                     module_msg += 'reloading "{}" failed, error is:```{}```\n'.format(message.content.split()[i], e)
             await client.send_message(message.channel, module_msg)
         else:
-            module_list = ['ec', 'on_msg', 'survey']
+            module_list = ['ec', 'on_msg', 'survey', 'play']
             module_msg = ''
             for i in module_list:
                 try:
