@@ -95,15 +95,28 @@ class Msger:
                 if not survey_inst is None and not survey_inst.running:
                     survey_inst = None
 
-                if survey_inst is None and len(args) > 1:
+                if survey_inst is None and len(args) > 1 and args[1] == '-start':
                     survey_inst = survey.Survey(message)
                     await survey_inst.prompt(message, client)
                 elif len(args) == 1:
-                    await client.send_message(message.channel, "I need a question first!")
+                    await client.send_message(message.channel, 
+                            "Usage:\n\t`/survey -start [question]` to ask a question" + \
+                                    "\n\t`/survey [response]`  to respond " + \
+                                    "\n\t`/survey -end to show results")
                 else:
-                    if survey_inst.surveyor is message.author and len(args) > 1 and args[1] == '-end':
-                        await survey_inst.end(message, client)
-                        survey_inst = None
+                    if len(args) > 1 and args[1] == '-end':
+                        if survey_inst.surveyor is message.author:
+                            await survey_inst.end(message, client)
+                            survey_inst = None
+                        else:
+                            await client.delete_message(message)
+                            await client.send_message(message.channel,
+                                    "No. Only the user who asked the " + \
+                                    "question can end it")
+                    elif len(args) > 1 and args[1] == '-start':
+                        await client.delete_message(message)
+                        await client.send_message(message.channel, 
+                                "A question is already being asked.")
                     else:
                         await survey_inst.response(message, client)
             except Exception as e:
