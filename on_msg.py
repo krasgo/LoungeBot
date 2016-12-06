@@ -98,7 +98,7 @@ class Msger:
                 if survey_inst is None and len(args) > 1 and args[1] == '-start':
                     survey_inst = survey.Survey(message)
                     await survey_inst.prompt(message, client)
-                elif len(args) == 1:
+                else:
                     await client.send_message(message.channel, 
                             "Usage:\n\t`/survey -start [question]` to ask a question" + \
                                     "\n\t`/survey [response]`  to respond " + \
