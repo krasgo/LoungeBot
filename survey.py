@@ -21,7 +21,7 @@ class Survey:
 
     async def response(self, message, client):
         if not self.member_answered[message.author]:
-            self.answers += message.content[arg_len:]
+            self.answers.append(message.content[arg_len:])
             await client.delete_message(message)
             self.member_answered[message.author] = True
             await client.send_message(message.channel, "Response submitted.")
