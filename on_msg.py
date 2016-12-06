@@ -99,7 +99,7 @@ class Msger:
                     survey_inst = survey.Survey(message)
                 else:
                     if survey_inst.surveyor is message.author and len(args) > 1 and args[1] == '-end':
-                        await survey_inst.end(message)
+                        await survey_inst.end(message, client)
                         survey_inst = None
                     else:
                         await survey_inst.response(message, client)
