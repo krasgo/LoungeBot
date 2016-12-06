@@ -11,7 +11,7 @@ class Survey:
                 in message.server.members}
         self.answers = []
 
-    async def prompt(message, client):
+    async def prompt(self, message, client):
         await client.delete_message(message)
         msg = "A user has submitted a question:\n" + \
                 message.content[arg_len:] + \
@@ -19,7 +19,7 @@ class Survey:
                 " `/survey` before your response."
         await client.send_message(message.channel, msg)
 
-    async def response(message, client):
+    async def response(self, message, client):
         if not self.member_answered[message.author]:
             self.answers += message.content[arg_len:]
             await client.delete_message(message)
@@ -29,7 +29,7 @@ class Survey:
             await client.send_message(message.channel, 
                     "You've already submitted a response, " + message.author.mention)
 
-    async def end(message, client):
+    async def end(self, message, client):
         msg = "The user has closed the question. Here are the responses:\n" + \
                 "\n".join(self.answers) + "\n"
         self.running = False
