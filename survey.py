@@ -1,9 +1,9 @@
 import discord
 import asyncio
 
-class Survey:
-    arg_len = 8
+arg_len = 8
 
+class Survey:
     def __init__(self, message):
         self.running = True
         self.surveyor = message.author
