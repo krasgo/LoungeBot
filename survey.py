@@ -25,12 +25,14 @@ class Survey:
             await client.delete_message(message)
             self.member_answered[message.author] = True
             await client.send_message(message.channel, "Response submitted.")
-        else:
+        else: 
+            await client.delete_message(message)
             await client.send_message(message.channel, 
                     "You've already submitted a response, " + message.author.mention)
 
     async def end(self, message, client):
         ans = [x + "\n\n" for x in self.answers]
+        await client.delete_message(message)
         msg = "The user has closed the question. Here are the responses:\n" + \
               '```\n' + "".join(ans) + '```'
         self.running = False
