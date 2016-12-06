@@ -1,8 +1,8 @@
 import discord
 import asyncio
 
-start_len = "/survey -start ".len() 
-resp_len = "/survey ".len()
+start_len = len("/survey -start ")
+resp_len = len("/survey ")
 class Survey:
     def __init__(self, message):
         self.running = True
