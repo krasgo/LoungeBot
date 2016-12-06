@@ -8,7 +8,7 @@ class Survey:
         self.running = True
         self.surveyor = message.author
         self.member_answered = {member:False for member 
-				in message.server.members}
+                in message.server.members}
         self.answers = []
 
     async def prompt(message, client):
