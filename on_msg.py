@@ -119,7 +119,7 @@ class Msger:
                             "Usage:\n\t`/survey -start [question]` to ask a question" + \
                                     "\n\t`/survey [response]`  to respond " + \
                                     "\n\t`/survey -end` to show results")
-                            except Exception as e:
+            except Exception as e:
                 err_msg = 'Err:\n```\n'
                 err_msg += str(e) + '```'
                 await client.send_message(message.channel, err_msg)
