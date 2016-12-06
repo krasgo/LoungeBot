@@ -32,7 +32,7 @@ class Survey:
     async def end(self, message, client):
         ans = [x + "\n" for x in self.answers]
         msg = "The user has closed the question. Here are the responses:\n" + \
-                "".join(ans)
+               ans 
         self.running = False
         await client.send_message(message.channel, msg)
         
