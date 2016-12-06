@@ -97,7 +97,7 @@ class Msger:
 
                 if survey_inst is None and len(args) > 1:
                     survey_inst = survey.Survey(message)
-                    survey_inst = survey.prompt(message, client)
+                    survey_inst = survey_inst.prompt(message, client)
                 elif len(args) == 1:
                     await client.send_message(message.channel, "I need a question first!")
                 else:
