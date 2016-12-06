@@ -5,8 +5,10 @@ import subprocess
 from subprocess import Popen
 import json
 import ec
+import survey
 
 ec_game = None
+survey_inst = None
 
 class Msger:
 	def __init__(self, message, client):
@@ -29,7 +31,7 @@ class Msger:
 		bot_info = None
 		with open('bot_info.json') as f:
 			bot_info = json.load(f)
-		# Do git pull (for our favorite feline)
+		# Do git pull
 		if args[0] == '/pull' and message.author.id in bot_info['owners']:
 			try:
 				p = Popen(['git', 'pull'],
@@ -84,6 +86,23 @@ class Msger:
 				# Allow people to input answers
 				else:
 					await ec_game.input_answer(message, client, message.author)
+
+		# Survey
+		if args[0] == '/survey':
+			global survey_inst
+
+                        if not survey_inst.running and survey_inst is None:
+                            survey_inst = None
+
+                        if survey_inst is None:
+                            survey_inst = survey.Survey(message)
+                        else:
+                            if survey_inst.surveyor is message.author and args[1] == '-end':
+                                await survey_inst.end(message)
+                                survey_inst = None
+                            else:
+                                await survey_inst.response(message, client)
+
 
 		# Clears the chat
 		if args[0] == '/clear':
