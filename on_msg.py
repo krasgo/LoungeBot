@@ -102,7 +102,7 @@ class Msger:
                     await client.send_message(message.channel, 
                             "Usage:\n\t`/survey -start [question]` to ask a question" + \
                                     "\n\t`/survey [response]`  to respond " + \
-                                    "\n\t`/survey` -end to show results")
+                                    "\n\t`/survey -end` to show results")
                 else:
                     if len(args) > 1 and args[1] == '-end':
                         if survey_inst.surveyor is message.author:
