@@ -131,11 +131,11 @@ class Msger:
         if args[0] == '/play':
             try:
                 if len(args) > 1:
-                voice = yield from client.join_voice_channel(channel)
-                player = voice.create_ytdl_player(args[1])
-                player.start()
-            else:
-                await client.send_message(message.channel, "Please enter a URL after the `/play` command")
+                    voice = yield from client.join_voice_channel(channel)
+                    player = voice.create_ytdl_player(args[1])
+                    player.start()
+                else:
+                    await client.send_message(message.channel, "Please enter a URL after the `/play` command")
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
                 await client.send_message(message.channel, err_msg)
