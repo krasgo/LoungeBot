@@ -131,7 +131,7 @@ class Msger:
         if args[0] == '/play':
             try:
                 if len(args) > 1:
-                    voice = client.join_voice_channel(channel)
+                    voice = client.join_voice_channel(message.channel)
                     player = voice.create_ytdl_player(args[1])
                     player.start()
                 else:
