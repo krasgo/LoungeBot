@@ -98,28 +98,28 @@ class Msger:
                 if survey_inst is None and len(args) > 1 and args[1] == '-start':
                     survey_inst = survey.Survey(message)
                     await survey_inst.prompt(message, client)
+                elif survey_inst is not None and len(args) > 1 and args[1] == '-end':
+                    if survey_inst.surveyor is message.author:
+                        await survey_inst.end(message, client)
+                        survey_inst = None
+                    else:
+                        await client.delete_message(message)
+                        await client.send_message(message.channel,
+                                "No. Only the user who asked the " + \
+                                "question can end it")
+                elif survey_inst is not None and len(args) > 1 and args[1] == '-start':
+                    await client.delete_message(message)
+                    await client.send_message(message.channel, 
+                            "A question is already being asked.")
+                elif survey_inst is not None and len(args) > 1: 
+                        await survey_inst.response(message, client)
+
                 else:
                     await client.send_message(message.channel, 
                             "Usage:\n\t`/survey -start [question]` to ask a question" + \
                                     "\n\t`/survey [response]`  to respond " + \
                                     "\n\t`/survey -end` to show results")
-                else:
-                    if len(args) > 1 and args[1] == '-end':
-                        if survey_inst.surveyor is message.author:
-                            await survey_inst.end(message, client)
-                            survey_inst = None
-                        else:
-                            await client.delete_message(message)
-                            await client.send_message(message.channel,
-                                    "No. Only the user who asked the " + \
-                                    "question can end it")
-                    elif len(args) > 1 and args[1] == '-start':
-                        await client.delete_message(message)
-                        await client.send_message(message.channel, 
-                                "A question is already being asked.")
-                    else:
-                        await survey_inst.response(message, client)
-            except Exception as e:
+                            except Exception as e:
                 err_msg = 'Err:\n```\n'
                 err_msg += str(e) + '```'
                 await client.send_message(message.channel, err_msg)
