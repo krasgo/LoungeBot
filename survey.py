@@ -12,7 +12,6 @@ class Survey:
         self.answers = []
 
     async def prompt(self, message, client):
-        global arg_len
         await client.delete_message(message)
         msg = "A user has submitted a question:\n" + \
                 message.content[arg_len:] + \
@@ -21,7 +20,6 @@ class Survey:
         await client.send_message(message.channel, msg)
 
     async def response(self, message, client):
-        global arg_len
         if not self.member_answered[message.author]:
             self.answers += message.content[arg_len:]
             await client.delete_message(message)
