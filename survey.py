@@ -13,9 +13,9 @@ class Survey:
 
     async def prompt(self, message, client):
         await client.delete_message(message)
-        msg = "A user has submitted a question:\n\t" + \
+        msg = "A user has submitted a question:\n\t`" + \
                 message.content[arg_len:] + \
-                "\nAnswer this question anonymously by typing" + \
+                "`\nAnswer this question anonymously by typing" + \
                 " `/survey` before your response."
         await client.send_message(message.channel, msg)
 
@@ -30,7 +30,7 @@ class Survey:
                     "You've already submitted a response, " + message.author.mention)
 
     async def end(self, message, client):
-        ans = [x + "\n" for x in self.answers]
+        ans = [x + "\n\n" for x in self.answers]
         msg = "The user has closed the question. Here are the responses:\n" + \
               '```\n' + "".join(ans) + '```'
         self.running = False
