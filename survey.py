@@ -13,7 +13,7 @@ class Survey:
 
     async def prompt(self, message, client):
         await client.delete_message(message)
-        msg = "A user has submitted a question:\n" + \
+        msg = "A user has submitted a question:\n\t" + \
                 message.content[arg_len:] + \
                 "\nAnswer this question anonymously by typing" + \
                 " `/survey` before your response."
@@ -32,7 +32,7 @@ class Survey:
     async def end(self, message, client):
         ans = [x + "\n" for x in self.answers]
         msg = "The user has closed the question. Here are the responses:\n" + \
-              "".join(ans) 
+              '```\n' + "".join(ans) + '```'
         self.running = False
         await client.send_message(message.channel, msg)
         
