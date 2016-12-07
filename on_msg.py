@@ -3,6 +3,7 @@ import asyncio
 import urllib.request
 import subprocess
 from subprocess import Popen
+import youtube_dl
 import json
 import ec
 import survey
@@ -128,11 +129,13 @@ class Msger:
         if args[0] == '/clear':
             await client.send_message(message.channel, '.' + '\n' * 100 + '.')
 
+        # Youtube player
         if args[0] == '/play':
+            client.
             try:
                 if len(args) > 1:
-                    voice = client.join_voice_channel(message.channel)
-                    player = voice.create_ytdl_player(args[1])
+                    voice = await client.join_voice_channel(message.author.voice_channel)
+                    player = await voice.create_ytdl_player(args[1])
                     player.start()
                 else:
                     await client.send_message(message.channel, "Please enter a URL after the `/play` command")
