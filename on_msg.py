@@ -131,7 +131,6 @@ class Msger:
 
         # Youtube player
         if args[0] == '/play':
-            client.
             try:
                 if len(args) > 1:
                     voice = await client.join_voice_channel(message.author.voice_channel)
