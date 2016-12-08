@@ -158,7 +158,6 @@ class Msger:
                     attempts = int(args[1])
                     if attempts > 5:
                         attempts = 5
-                i = 6
                 while i < attempts:
                     imgur_path = imgur_host 
                     for j in range(5): # 5 since that's how long the end of the url is (well it's 7 now but 5 is more reliable)
