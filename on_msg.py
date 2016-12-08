@@ -10,7 +10,6 @@ import json
 import ec
 import survey
 import requests
-import time
 
 ec_game = None
 survey_inst = None
@@ -166,7 +165,6 @@ class Msger:
                         imgur_path += random.choice(string.ascii_letters + string.digits)
                 imgur_path += imgur_suffix
                 r = requests.get(imgur_path)
-                time.sleep(0.200)
                 if len(r.history) is 0:
                     await client.send_message(message.channel, 
                         str(imgur_path) + ", " + str(r.status_code) + "\n" + str(r.history))
