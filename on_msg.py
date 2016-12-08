@@ -165,7 +165,7 @@ class Msger:
                         imgur_path += random.choice(string.ascii_letters + string.digits)
                 imgur_path += imgur_suffix
                 r = requests.get(imgur_path)
-                if r.history is []:
+                if len(r.history) is 0:
                     await client.send_message(message.channel, 
                         str(imgur_path) + ", " + str(r.status_code) + "\n" + str(r.history))
             except Exception as e:
