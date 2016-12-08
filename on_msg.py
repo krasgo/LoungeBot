@@ -175,6 +175,9 @@ class Msger:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
                 await client.send_message(message.channel, err_msg)
 
+        if args[0] == '/leave':
+            leave_server(message.server)
+
         # Removes your message (testing purposes)
         if args[0] == '/remove':
             await client.delete_message(message)
