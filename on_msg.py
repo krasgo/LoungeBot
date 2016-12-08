@@ -168,7 +168,7 @@ class Msger:
                     if len(r.history) is 0:
                         await client.send_message(message.channel, 
                             str(imgur_path) + ", " + str(r.status_code) + "\n" + str(r.history))
-                        attempts += 1
+                        i += 1
                     else:
                         await client.send_message(message.channel, "Failed attempt.")
                     r.history = []
