@@ -160,6 +160,7 @@ class Msger:
                         attempts = 5
 
                 for i in range(attempts):
+                    r.history = []
                     imgur_path = imgur_host 
                     for i in range(5): # 5 since that's how long the end of the url is (well it's 7 now but 5 is more reliable)
                         imgur_path += random.choice(string.ascii_letters + string.digits)
