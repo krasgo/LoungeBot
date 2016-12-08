@@ -159,7 +159,7 @@ class Msger:
                     if attempts > 5:
                         attempts = 5
 
-                for i in range(attempts):
+                while i < attempts:
                     imgur_path = imgur_host 
                     for i in range(5): # 5 since that's how long the end of the url is (well it's 7 now but 5 is more reliable)
                         imgur_path += random.choice(string.ascii_letters + string.digits)
@@ -168,9 +168,9 @@ class Msger:
                     if len(r.history) is 0:
                         await client.send_message(message.channel, 
                             str(imgur_path) + ", " + str(r.status_code) + "\n" + str(r.history))
+                        attempts += 1
                     else:
                         await client.send_message(message.channel, "Failed attempt.")
-                        attempts += 1
                     r.history = []
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
