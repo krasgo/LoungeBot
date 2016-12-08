@@ -153,7 +153,7 @@ class Msger:
                 imgur_suffix = '.png'
                 attempts = 1
 
-                conn = httplib.HTTPConnection(imgur_host)
+                conn = http.client.HTTPConnection(imgur_host)
                 http_code = ''
 
                 if len(args) > 1 and int(args[1]) > 1:
