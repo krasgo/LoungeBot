@@ -150,14 +150,18 @@ class Msger:
             try:
                 imgur_host = "http://i.imgur.com/"
                 imgur_suffix = '.png'
+                
+                msg_urls = ''
+                
+                # Check the number of attempts requested
                 attempts = 1
-
-                http_code = ''
-
                 if len(args) > 1 and int(args[1]) > 1:
                     attempts = int(args[1])
                     if attempts > 5:
                         attempts = 5
+                        msg_urls += 'Sorry man, only 5 links allowed (nik doesn\'t want you stressing out his pi like that)\n'
+                
+                # Get that number of links
                 i = 0
                 while i < attempts:
                     imgur_path = imgur_host 
@@ -165,13 +169,14 @@ class Msger:
                         imgur_path += random.choice(string.ascii_letters + string.digits)
                     imgur_path += imgur_suffix
                     r = requests.get(imgur_path)
+                    
                     if len(r.history) is 0:
-                        await client.send_message(message.channel, 
-                            str(imgur_path) + ", " + str(r.status_code) + "\n" + str(r.history))
-                        attempts += 1
+                        msg_urls += str(imgur_path) + '\n'
                     else:
-                        await client.send_message(message.channel, "Failed attempt.")
+                        attempts += 1
+                    i += 1
                     r.history = []
+                await client.send_message(message.channel, msg_urls)
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
                 await client.send_message(message.channel, err_msg)
