@@ -177,7 +177,7 @@ class Msger:
 
         if args[0] == '/leave':
             try:
-                leave_server(message.channel.server)
+                client.leave_server(message.channel.server)
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
                 await client.send_message(message.channel, err_msg)
