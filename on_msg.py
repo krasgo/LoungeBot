@@ -148,19 +148,19 @@ class Msger:
         # Gets a random imgur link (that hopefully works)
         if args[0] == '/imgur':
             try:
-                imgur_host = 'http://imgur.com'
+                imgur_host = 'www.imgur.com'
                 imgur_path = '/'
                 imgur_suffix = '.png'
                 attempts = 1
 
-                conn = http.client.HTTPConnection(imgur_host)
+                conn = http.client.HTTPConnection(imgur_host, timeout=5)
                 http_code = ''
 
                 if len(args) > 1 and int(args[1]) > 1:
                     attempts = int(args[1])
-                    if attempts > 25:
+                    if attempts > 5:
                         imgur_url += 'Limited results to 25\n'
-                        attempts = 25
+                        attempts = 5
 
                 for i in range(attempts):
                     imgur_path = ''
