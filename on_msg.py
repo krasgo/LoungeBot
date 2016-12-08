@@ -9,6 +9,7 @@ import random
 import json
 import ec
 import survey
+import httplib
 
 ec_game = None
 survey_inst = None
@@ -147,21 +148,28 @@ class Msger:
         # Gets a random imgur link (that hopefully works)
         if args[0] == '/imgur':
             try:
-                imgur_url = ''
-                
+                imgur_host = 'http://imgur.com'
+                imgur_path = '/'
+                imgur_suffix = '.png'
                 attempts = 1
+
+                conn = httplib.HTTPConnection(imgur_host)
+                http_code = ''
+
                 if len(args) > 1 and int(args[1]) > 1:
                     attempts = int(args[1])
                     if attempts > 25:
                         imgur_url += 'Limited results to 25\n'
                         attempts = 25
-                
+
                 for i in range(attempts):
-                    imgur_url += '\nhttp://imgur.com/'
+                imgur_path = ''
                     for i in range(5): # 5 since that's how long the end of the url is (well it's 7 now but 5 is more reliable)
-                        imgur_url += random.choice(string.ascii_letters + string.digits)
-                
-                await client.send_message(message.channel, imgur_url)
+                        imgur_path += random.choice(string.ascii_letters + string.digits)
+                imgur_path += imgur_suffix
+                conn.request("HEAD", path)
+                http_code = conn.getresponse().status 
+                await client.send_message(message.channel, http_code)
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
                 await client.send_message(message.channel, err_msg)
