@@ -169,7 +169,7 @@ class Msger:
                 imgur_path += imgur_suffix
                 conn.request("HEAD", imgur_path)
                 http_code = conn.getresponse().status 
-                await client.send_message(message.channel, http_code)
+                await client.send_message(message.channel, http_code + ", " + imgur_host + imgur_path)
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
                 await client.send_message(message.channel, err_msg)
