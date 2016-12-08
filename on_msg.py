@@ -9,9 +9,7 @@ import random
 import json
 import ec
 import survey
-from http.client import HTTPConnection
-HTTPConnection.debuglevel = 1
-from urllib.request import urlopen
+import requests
 
 ec_game = None
 survey_inst = None
@@ -150,17 +148,15 @@ class Msger:
         # Gets a random imgur link (that hopefully works)
         if args[0] == '/imgur':
             try:
-                imgur_host = "i.imgur.com/"
+                imgur_host = "http://i.imgur.com/"
                 imgur_suffix = '.png'
                 attempts = 1
 
-                conn = http.client.HTTPConnection(imgur_host, timeout=5)
                 http_code = ''
 
                 if len(args) > 1 and int(args[1]) > 1:
                     attempts = int(args[1])
                     if attempts > 5:
-                        imgur_url += 'Limited results to 25\n'
                         attempts = 5
 
                 for i in range(attempts):
@@ -168,8 +164,8 @@ class Msger:
                     for i in range(5): # 5 since that's how long the end of the url is (well it's 7 now but 5 is more reliable)
                         imgur_path += random.choice(string.ascii_letters + string.digits)
                 imgur_path += imgur_suffix
-                response = urlopen(imgur_path)
-                await client.send_message(message.channel, str(response))
+                r = requests.get(imgur_host + imgur_path)
+                await client.send_message(message.channel, str(imgur_host + imgur_path) + ", " + str(r.status_code))
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
                 await client.send_message(message.channel, err_msg)
