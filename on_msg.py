@@ -157,9 +157,11 @@ class Msger:
                 attempts = 1
                 if len(args) > 1 and int(args[1]) > 1:
                     attempts = int(args[1])
-                    if attempts > 5:
-                        attempts = 5
-                        msg_urls += 'Sorry man, only 5 links allowed (nik doesn\'t want you stressing out his pi like that)\n'
+                    if attempts > 20:
+                        attempts = 20
+                        msg_urls += 'Sorry man, only 20 links allowed (nik doesn\'t want you stressing out his pi like that)\n'
+                
+                await client.send_message(message.channel, 'Loading...')
                 
                 # Get that number of links
                 i = 0
