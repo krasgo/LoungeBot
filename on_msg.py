@@ -4,6 +4,8 @@ import urllib.request
 import subprocess
 from subprocess import Popen
 import youtube_dl
+import string
+import random
 import json
 import ec
 import survey
@@ -141,7 +143,24 @@ class Msger:
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
                 await client.send_message(message.channel, err_msg)
-
+        
+        # Gets a random imgur link (that hopefully works)
+        if args[0] == '/imgur':
+            try:
+                attempts = 1
+                if len(args) > 1 and int(args[1]) > 1:
+                    attempts = int(args[1])
+                
+                imgur_url = ''
+                for i in range(attempts):
+                    imgur_url += '\nhttp://imgur.com/'
+                    for i in range(5): # 5 since that's how long the end of the url is (well it's 7 now but 5 is more reliable)
+                        imgur_url += random.choice(string.ascii_letters + string.digits)
+                
+                await client.send_message(message.channel, imgur_url)
+            except Exception as e:
+                err_msg = 'Err:\n```\n' + str(e) + '```'
+                await client.send_message(message.channel, err_msg)
 
         # Removes your message (testing purposes)
         if args[0] == '/remove':
