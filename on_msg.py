@@ -9,7 +9,7 @@ import random
 import json
 import ec
 import survey
-from import http.client import HTTPConnection
+from http.client import HTTPConnection
 HTTPConnection.debuglevel = 1
 from urllib.request import urlopen
 
