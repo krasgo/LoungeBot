@@ -9,7 +9,7 @@ import random
 import json
 import ec
 import survey
-import httplib
+import http.client
 
 ec_game = None
 survey_inst = None
