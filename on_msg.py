@@ -169,6 +169,7 @@ class Msger:
                         await client.send_message(message.channel, 
                             str(imgur_path) + ", " + str(r.status_code) + "\n" + str(r.history))
                     else:
+                        await client.send_message(message.channel, "Failed attempt.")
                         attempts += 1
                     r.history = []
             except Exception as e:
