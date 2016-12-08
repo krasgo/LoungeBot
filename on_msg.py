@@ -167,10 +167,9 @@ class Msger:
                     for i in range(5): # 5 since that's how long the end of the url is (well it's 7 now but 5 is more reliable)
                         imgur_path += random.choice(string.ascii_letters + string.digits)
                 imgur_path += imgur_suffix
-                conn.request("GET", imgur_path)
-                await client.send_message(message.channel, str(imgur_path) + " is the path being used")
-                http_code = conn.getresponse().status 
-                await client.send_message(message.channel, str(http_code) + ", " + "http://" + imgur_host + imgur_path)
+                conn.request("PUT", imgur_path)
+                http_code = conn.getresponse() 
+                await client.send_message(message.channel, str(http_code.status) + " " + str(http_code.reason) + ", " + "http://" + imgur_host + imgur_path)
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
                 await client.send_message(message.channel, err_msg)
