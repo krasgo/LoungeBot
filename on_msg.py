@@ -150,7 +150,7 @@ class Msger:
         # Gets a random imgur link (that hopefully works)
         if args[0] == '/imgur':
             try:
-                imgur_host = "www.i.imgur.com/"
+                imgur_host = "http://i.imgur.com/"
                 imgur_suffix = '.png'
                 attempts = 1
 
