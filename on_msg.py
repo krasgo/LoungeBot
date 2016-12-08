@@ -147,11 +147,15 @@ class Msger:
         # Gets a random imgur link (that hopefully works)
         if args[0] == '/imgur':
             try:
+                imgur_url = ''
+                
                 attempts = 1
                 if len(args) > 1 and int(args[1]) > 1:
                     attempts = int(args[1])
+                    if attempts > 25:
+                        imgur_url += 'Limited results to 25\n'
+                        attempts = 25
                 
-                imgur_url = ''
                 for i in range(attempts):
                     imgur_url += '\nhttp://imgur.com/'
                     for i in range(5): # 5 since that's how long the end of the url is (well it's 7 now but 5 is more reliable)
