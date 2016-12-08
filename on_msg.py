@@ -168,6 +168,7 @@ class Msger:
                         imgur_path += random.choice(string.ascii_letters + string.digits)
                 imgur_path += imgur_suffix
                 conn.request("HEAD", imgur_path)
+                await client.send_message(message.channel, str(imgur_path) + " is the path being used")
                 http_code = conn.getresponse().status 
                 await client.send_message(message.channel, str(http_code) + ", " + "http://" + imgur_host + imgur_path)
             except Exception as e:
