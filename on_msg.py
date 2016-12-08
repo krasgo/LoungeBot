@@ -158,6 +158,7 @@ class Msger:
                     attempts = int(args[1])
                     if attempts > 5:
                         attempts = 5
+                i = 0
                 while i < attempts:
                     imgur_path = imgur_host 
                     for j in range(5): # 5 since that's how long the end of the url is (well it's 7 now but 5 is more reliable)
@@ -171,13 +172,6 @@ class Msger:
                     else:
                         await client.send_message(message.channel, "Failed attempt.")
                     r.history = []
-            except Exception as e:
-                err_msg = 'Err:\n```\n' + str(e) + '```'
-                await client.send_message(message.channel, err_msg)
-
-        if args[0] == '/leave':
-            try:
-                client.leave_server(message.channel.server)
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
                 await client.send_message(message.channel, err_msg)
