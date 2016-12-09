@@ -10,6 +10,7 @@ import json
 import ec
 import survey
 import requests
+from random_words import RandomWords
 
 ec_game = None
 survey_inst = None
@@ -183,6 +184,12 @@ class Msger:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
                 await client.send_message(message.channel, err_msg)
 
+        if args[0] == '/gimg':
+                word_site = "http://svnweb.freebsd.org/csrg/share/dict/words?view=co&content-type=text/plain"
+                response = requests.get(word_site)
+                WORDS = response.content.splitlines()
+                await client.send_message(message.channel, random.choice(WORDS))
+                
         # Removes your message (testing purposes)
         if args[0] == '/remove':
             await client.delete_message(message)
