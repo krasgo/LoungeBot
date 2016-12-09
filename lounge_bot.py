@@ -49,7 +49,7 @@ async def on_message(message):
 
 @client.event
 async def on_reaction_add(reaction, user):
-    await client.send_message(message.channel, "The reaction added was: " + str(reaction.emoji))
+    await client.send_message(reaction.message.channel, "The reaction added was: " + str(reaction.emoji))
     await client.delete_message(reaction.message)
 
 client.run(bot_info['login'])
