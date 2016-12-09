@@ -10,7 +10,6 @@ import json
 import ec
 import survey
 import requests
-from random_words import RandomWords
 
 ec_game = None
 survey_inst = None
