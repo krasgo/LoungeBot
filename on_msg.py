@@ -204,13 +204,13 @@ class Msger:
                         "\nThe bot's colour is " + str(bot.colour.value ))
                 
                 await client.send_message(message.channel, "Editing profile (before)")
-                await client.edit_profile(username=pt.name)
+                await client.edit_profile(username=(str(pt.name)))
                 #await client.send_message(message.channel, "Editing role (before)")
                 #await client.edit_role(message.server, bot.role)
                 await client.send_message(message.channel, pt.msg)
 
                 await client.send_message(message.channel, "Editing profile (after)")
-                await client.edit_profile(username=bot.name)
+                await client.edit_profile(username=(bot.name))
                 #await client.send_message(message.channel, "Editing role (after)")
                 #await client.edit_role(message.server, bot.role)
 
