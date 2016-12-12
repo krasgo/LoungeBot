@@ -188,15 +188,15 @@ class Msger:
                 await client.send_message(message.channel, "Hello!")
 
                 class pt:
-                    user_m = message.mentions[0]
-                    name = user_m.display_name
-                    colour = user_m.colour
-                    msg_len = len('/pretend   <>' + user_m.id)
+                    member = message.mentions[0]
+                    name = member.nick
+                    colour = member.colour
+                    msg_len = len('/pretend   <>' + member.id)
                     msg = message.content[msg_len:]
                 class bot:
-                    user_m = client.user
-                    name = user_m.display_name
-                    colour = user_m.colour
+                    member = client.member
+                    name = member.nick
+                    colour = member.colour
 
                 await client.send_message(message.channel, "The bot's name is " + str(bot.name)
                         + "\nThe user being mimicked is " + str(pt.name) + "\nThe message to be sent is " + 
