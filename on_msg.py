@@ -198,17 +198,9 @@ class Msger:
                     member = message.server.me
                     colour = message.server.me.colour
                     role = message.server.me.top_role
-
-                await client.send_message(message.channel, "The bot's name is " + str(bot.name)
-                        + "\nThe user being mimicked is " + str(pt.name) + "\nThe message to be sent is " + 
-                        str(pt.msg) + "\nThe user's colour is " + str(pt.colour.value) +
-                        "\nThe bot's colour is " + str(bot.colour.value ))
                 
-                await client.send_message(message.channel, "Editing role (before)")
                 await client.change_nickname(bot.member, pt.name)
                 await client.send_message(message.channel, pt.msg)
-
-                await client.send_message(message.channel, "Editing role (after)")
                 await client.change_nickname(bot.member, bot.name)
 
             except Exception as e:
