@@ -204,11 +204,11 @@ class Msger:
                         "\nThe bot's colour is " + str(bot.colour.value ))
 
                 await client.edit_profile(username=pt.name)
-                await client.edit_role(message.server, bot.role, colour = Colour.gold())
+                await client.edit_role(message.server, bot.role)
                 await client.send_message(message.channel, pt.msg)
 
                 await client.edit_profile(username=bot.name)
-                await client.edit_role(message.server, bot.role, colour = Colour.gold())
+                await client.edit_role(message.server, bot.role)
 
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
