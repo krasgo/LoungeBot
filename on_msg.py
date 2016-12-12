@@ -189,7 +189,7 @@ class Msger:
 
                 class pt:
                     member = message.mentions[0]
-                    name = member.nick
+                    name = member.display_name
                     colour = member.colour
                     msg_len = len('/pretend   <>' + member.id)
                     msg = message.content[msg_len:]
