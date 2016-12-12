@@ -196,7 +196,7 @@ class Msger:
                 class bot:
                     user = client.user
                     name = user.display_name
-                    colour = client.user.colour
+                    colour = user.colour
 
                 user = client.user
                 name = user.display_name
