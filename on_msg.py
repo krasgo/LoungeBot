@@ -189,13 +189,13 @@ class Msger:
 
                 class pt:
                     user_m = message.mentions[0]
-                    name = user.display_name
-                    colour = user.colour
-                    msg_len = len('/pretend   <>' + user.id)
+                    name = user_m.display_name
+                    colour = user_m.colour
+                    msg_len = len('/pretend   <>' + user_m.id)
                     msg = message.content[msg_len:]
                 class bot:
                     user_m = client.user
-                    name = user.display_name
+                    name = user_m.display_name
                     colour = user_m.colour
 
                 await client.send_message(message.channel, "The bot's name is " + str(bot.name)
