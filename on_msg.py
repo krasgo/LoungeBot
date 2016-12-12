@@ -195,7 +195,7 @@ class Msger:
                     msg = message.content[msg_len:]
                 class bot:
                     name = client.user.display_name
-                    colour = client.user.colour
+                    colour = client.me.colour
 
                 await client.send_message(message.channel, "The bot's name is " + str(bot.name)
                         + "\nThe user being mimicked is " + str(pt.name) + "\nThe message to be sent is " + 
