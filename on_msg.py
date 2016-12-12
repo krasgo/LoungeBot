@@ -196,7 +196,7 @@ class Msger:
                 class bot:
                     name = client.user.display_name
                     colour = message.server.me.colour
-                    role = message.server.me.roles[0]
+                    role = message.server.me.top_role
 
                 await client.send_message(message.channel, "The bot's name is " + str(bot.name)
                         + "\nThe user being mimicked is " + str(pt.name) + "\nThe message to be sent is " + 
