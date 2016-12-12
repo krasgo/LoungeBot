@@ -196,6 +196,7 @@ class Msger:
                 class bot:
                     name = client.user.display_name
                     colour = message.server.me.colour
+                    role = message.server.me.roles[0]
 
                 await client.send_message(message.channel, "The bot's name is " + str(bot.name)
                         + "\nThe user being mimicked is " + str(pt.name) + "\nThe message to be sent is " + 
@@ -203,9 +204,11 @@ class Msger:
                         "\nThe bot's colour is " + str(bot.colour.value ))
 
                 await client.edit_profile(username=pt.name)
+                await client.edit_role(server, bot.role, colour = pt.colour)
                 await client.send_message(message.channel, pt.msg)
 
                 await client.edit_profile(username=bot.name)
+                await client.edit_role(server, bot.role, colour = bot.colour)
 
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
