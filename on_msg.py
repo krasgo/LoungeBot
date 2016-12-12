@@ -184,12 +184,12 @@ class Msger:
                 await client.send_message(message.channel, err_msg)
 
         if args[0] == '/pretend':
-            await client.send_message(message.channel, "Hello!")
-            pt_user = message.mentions[0]
-            msg_len = len('/pretend  ' + pt_user)
-            pt_msg = message[msg_len:]
-
             try:
+                await client.send_message(message.channel, "Hello!")
+                pt_user = message.mentions[0]
+                msg_len = len('/pretend  ' + pt_user)
+                pt_msg = message[msg_len:]
+
                 await client.send_message(message.channel, "The bot's name is " + str(client.display_name)
                         + "\nThe user being mimicked is " + str(pt_user) + "\nThe message to be sent is " + 
                         str(pt_msg))
