@@ -191,16 +191,26 @@ class Msger:
                     user = message.mentions[0]
                     name = user.display_name
                     colour = user.colour
-                    msg_len = len('/pretend   <>' + pt_user.id)
+                    msg_len = len('/pretend   <>' + user.id)
                     msg = message.content[msg_len:]
                 class bot:
                     user = client.user
                     name = user.display_name
                     colour = client.user.colour
 
+                user = client.user
+                name = user.display_name
+                color = client.user.color
+
                 await client.send_message(message.channel, "The bot's name is " + str(bot.name)
                         + "\nThe user being mimicked is " + str(pt.name) + "\nThe message to be sent is " + 
                         str(pt_msg) + "\nTheir colour is " + str(pt.colour.value))
+
+                await client.edit_profile(username=pt.name)
+                await client.send_message(message.channel, pt.msg)
+
+                await client.edit_profile(username=bot.name)
+
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
                 await client.send_message(message.channel, err_msg)
