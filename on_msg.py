@@ -185,6 +185,7 @@ class Msger:
 
         if args[0] == '/pretend':
             try:
+                await client.delete_message(message)
                 class pt:
                     member = message.mentions[0]
                     name = member.display_name
