@@ -186,14 +186,21 @@ class Msger:
         if args[0] == '/pretend':
             try:
                 await client.send_message(message.channel, "Hello!")
-                pt_user = message.mentions[0]
-                pt_colour = pt_user.colour
-                msg_len = len('/pretend  ' + pt_user.id)
-                pt_msg = message.content[msg_len:]
 
-                await client.send_message(message.channel, "The bot's name is " + str(client.user.display_name)
-                        + "\nThe user being mimicked is " + str(pt_user.display_name) + "\nThe message to be sent is " + 
-                        str(pt_msg) + "\nTheir colour is " + str(pt_colour.value))
+                class pt:
+                    user = message.mentions[0]
+                    name = user.display_name
+                    colour = user.colour
+                    msg_len = len('/pretend   <>' + pt_user.id)
+                    msg = message.content[msg_len:]
+                class bot:
+                    user = client.user
+                    name = user.display_name
+                    colour = client.user.colour
+
+                await client.send_message(message.channel, "The bot's name is " + str(bot.name)
+                        + "\nThe user being mimicked is " + str(pt.name) + "\nThe message to be sent is " + 
+                        str(pt_msg) + "\nTheir colour is " + str(pt.colour.value))
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
                 await client.send_message(message.channel, err_msg)
