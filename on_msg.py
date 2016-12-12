@@ -204,15 +204,15 @@ class Msger:
                         "\nThe bot's colour is " + str(bot.colour.value ))
                 
                 await client.send_message(message.channel, "Editing profile (before)")
-                await client.edit_profile(username=message.mentions[0].display_name)
-                await client.send_message(message.channel, "Editing role (before)")
-                await client.edit_role(message.server, bot.role)
+                await client.edit_profile(username=pt.name)
+                #await client.send_message(message.channel, "Editing role (before)")
+                #await client.edit_role(message.server, bot.role)
                 await client.send_message(message.channel, pt.msg)
 
                 await client.send_message(message.channel, "Editing profile (after)")
                 await client.edit_profile(username=bot.name)
-                await client.send_message(message.channel, "Editing role (after)")
-                await client.edit_role(message.server, bot.role)
+                #await client.send_message(message.channel, "Editing role (after)")
+                #await client.edit_role(message.server, bot.role)
 
             except Exception as e:
                 err_msg = 'Err:\n```\n' + str(e) + '```'
