@@ -186,7 +186,7 @@ class Msger:
         if args[0] == '/pretend':
             try:
                 await client.send_message(message.channel, "Hello!")
-                pt_user = message.mentions[0]
+                pt_user = message.mentions[0].display_name
                 msg_len = len('/pretend  ' + pt_user)
                 pt_msg = message[msg_len:]
 
