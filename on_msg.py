@@ -99,6 +99,7 @@ class General:
             await self.client.say(msg_urls)
         except Exception as e:
             await self.client.say('Err:\n```\n' + str(e) + '```')
+
 def setup(client):
     client.add_cog(General(client))
 '''    
@@ -163,19 +164,6 @@ def setup(client):
             except Exception as e:
                 err_msg = 'Err:\n```\n'
                 err_msg += str(e) + '```'
-                await client.send_message(message.channel, err_msg)
-
-        # Youtube player
-        if args[0] == '/play':
-            try:
-                if len(args) > 1:
-                    voice = await client.join_voice_channel(message.author.voice_channel)
-                    player = await voice.create_ytdl_player(args[1])
-                    player.start()
-                else:
-                    await client.send_message(message.channel, "Please enter a URL after the `/play` command")
-            except Exception as e:
-                err_msg = 'Err:\n```\n' + str(e) + '```'
                 await client.send_message(message.channel, err_msg)
         
         # Gets a random imgur link (that hopefully works)
