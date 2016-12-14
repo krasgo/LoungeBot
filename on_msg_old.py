@@ -1,44 +1,40 @@
 import discord
 import asyncio
-from discord.ext import commands
 import urllib.request
 import subprocess
 from subprocess import Popen
 import youtube_dl
 import string
 import random
-import bot_info
+import json
+import ec
+import survey
 import requests
 
 ec_game = None
 survey_inst = None
 
-class General:
-    def __init__(self, client):
+class Msger:
+    def __init__(self, message, client):
+        self.message = message
         self.client = client
-    
-    # Ping!
-    @commands.command()
-    async def ping(self):
-        await self.client.say('miaou !')
-    
-    # Do git pull
-    @commands.command()
-    @commands.check(bot_info.is_owner)
-    async def pull(self):
-        try:
-            p = Popen(['git', 'pull'],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT)
-                
-            await self.client.say('Ran git pull!')
-        except Exception e:
-            await self.client.say('Error:\n```\n' + str(e) + '```')
 
-def setup(client):
-    client.add_cog(General(client))
-'''    
     async def handle_msg(self):
+        message = self.message
+        client = self.client
+        args = message.content.split()
+        
+        # Don't check the arguments if there are none
+        if len(args) == 0:
+            return
+        
+        # Test the bot
+        if args[0] == '/ping':
+            await client.send_message(message.channel, 'miaou !')
+        
+        bot_info = None
+        with open('bot_info.json') as f:
+            bot_info = json.load(f)
         # Do git pull
         if args[0] == '/pull' and message.author.id in bot_info['owners']:
             try:
@@ -222,4 +218,3 @@ def setup(client):
         # Removes your message (testing purposes)
         if args[0] == '/remove':
             await client.delete_message(message)
-'''

@@ -1,17 +1,31 @@
 import discord
 import asyncio
+from discord.ext import commands
 import importlib
-import json
+import bot_info
 import sys
-import on_msg
+import command_example
 
-# Load bot info (contains login and owners)
-bot_info = None
-with open('bot_info.json') as f:
-    bot_info = json.load(f)
+extensions = ['on_msg', 'command_example']
+client = commands.Bot(command_prefix='/', description='Here you go! All my commands!')
 
-client = discord.Client()
+# Loads extensions, returns string saying what reloaded
+def reload_extensions(exs):
+    module_msg = ''
+    for ex in exs:
+        try:
+            client.unload_extension(ex)
+            client.load_extension(ex)
+            module_msg += 'module "{}" reloaded\n'.format(ex)
+        except Exception as e:
+            module_msg += 'reloading "{}" failed, error is:```{}```\n'.format(ex, e)
+    return module_msg
 
+    
+    
+    
+    
+# Set up stuff
 @client.async_event
 def on_ready():
     print('Logged in as')
@@ -19,37 +33,28 @@ def on_ready():
     print(client.user.id)
     print('------')
     yield from client.change_presence(game=discord.Game(name='Dreams Beta'))
+    print(reload_extensions(extensions))
 
+# Process commands
 @client.event
 async def on_message(message):
-    # Reload the modules
-    if message.author.id in bot_info['owners'] and message.content.startswith('/reload'):
-        # Reload only select modules
-        arg_len = len(message.content.split())
-        if arg_len > 1:
-            module_msg = ''
-            for i in range(1, arg_len):
-                try:
-                    importlib.reload(sys.modules[message.content.split()[i]])
-                    module_msg += 'module "{}" reloaded\n'.format(message.content.split()[i])
-                except Exception as e:
-                    module_msg += 'reloading "{}" failed, error is:```{}```\n'.format(message.content.split()[i], e)
-            await client.send_message(message.channel, module_msg)
-        else:
-            module_list = ['ec', 'on_msg', 'survey']
-            module_msg = ''
-            for i in module_list:
-                try:
-                    importlib.reload(sys.modules[i])
-                    module_msg += 'module "{}" reloaded\n'.format(i)
-                except Exception as e:
-                    module_msg += 'reloading "{}" failed, error is:```{}```\n'.format(i, e)
-            await client.send_message(message.channel, module_msg)
-    await on_msg.Msger(message, client).handle_msg()
+    await client.process_commands(message)
 
+# Command error
 @client.event
-async def on_reaction_add(reaction, user):
-    await client.send_message(reaction.message.channel, "The reaction added was: " + str(reaction.emoji))
-    await client.delete_message(reaction.message)
+async def on_command_error(error, context):
+    await client.send_message(context.message.channel, 'Oops! No can do!')
+    
+# Reloading extensions
+@client.command()
+@commands.check(bot_info.is_owner)
+async def reload(*, exs : str = None):
+    module_msg = 'd' # d
+    if(exs is None):
+        module_msg = reload_extensions(extensions)
+    else:
+        module_msg = reload_extensions(exs.split())
+    await client.say(module_msg)
 
-client.run(bot_info['login'])
+# Start the bot
+client.run(bot_info.data['login'])
