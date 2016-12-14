@@ -46,7 +46,7 @@ async def on_command_error(error, context):
     await client.send_message(context.message.channel, 'Oops! No can do!')
     
 # Reloading extensions
-@client.command()
+@client.command(description='Reloads extensions. Usage: /reload [extension_list])
 @commands.check(bot_info.is_owner)
 async def reload(*, exs : str = None):
     module_msg = 'd' # d
