@@ -17,9 +17,10 @@ class MusicPlayer:
                 if not self.voice is None:
                     await self.voice.disconnect()
                     self.voice = None
+                
                 # Start playing
                 self.voice = await self.client.join_voice_channel(ctx.message.author.voice_channel)
-                player = await self.voice.create_ytdl_player(yt_url)
+                player = await self.voice.create_ytdl_player(yt_url, ytdl_options={'format': 'worst', 'audioformat': 'mp3'})
                 player.start()
             except Exception as e:
                 await client.send_message(message.channel, 'Err:\n```\n' + str(e) + '```')
