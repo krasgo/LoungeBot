@@ -32,23 +32,33 @@ class General:
                 stderr=subprocess.STDOUT)
                 
             await self.client.say('Ran git pull!')
-        except Exception e:
+        except Exception as e:
             await self.client.say('Error:\n```\n' + str(e) + '```')
+        
+    # Change profile icon
+    @commands.command()
+    async def chg_avatar(self, path_type : str = None, *, path : str = None):
+        if (path_type == 'url' or path_type == 'local') and not path is None:
+            try:
+                # URL
+                if path_type == 'url':
+                    a = urllib.request.urlopen(path).read()
+                    await self.client.edit_profile(avatar=a)
+                    await self.client.say('Avatar changed!')
+                # Local
+                elif path_type == 'local':
+                    with open(path, 'rb') as a:
+                        await self.client.edit_profile(avatar=(a.read()))
+                    await self.client.say('Avatar changed!')
+            except Exception as e:
+                await self.client.say('Error:\n```\n' + str(e) + '\n```')
+        else:
+            await self.client.say('Usage: /chg_avatar (local | url) path')
 
 def setup(client):
     client.add_cog(General(client))
 '''    
     async def handle_msg(self):
-        # Do git pull
-        if args[0] == '/pull' and message.author.id in bot_info['owners']:
-            try:
-                p = Popen(['git', 'pull'],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT)
-                
-                await client.send_message(message.channel, 'Ran git pull!')
-            except Exception as e:
-                await client.send_message(message.channel, 'Error:\n```\n' + str(e) + '```')
 
         # Change profile icon
         if args[0] == '/chg_avatar':

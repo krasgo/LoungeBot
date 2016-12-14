@@ -6,7 +6,7 @@ import bot_info
 import sys
 import command_example
 
-extensions = ['on_msg', 'command_example']
+extensions = ['on_msg', 'ec', 'survey' 'command_example']
 client = commands.Bot(command_prefix='/', description='Here you go! All my commands!')
 
 # Loads extensions, returns string saying what reloaded
