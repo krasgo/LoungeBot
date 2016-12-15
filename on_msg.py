@@ -16,7 +16,7 @@ survey_inst = None
 class General:
     def __init__(self, client):
         self.client = client
-    
+        
     # Ping!
     @commands.command(description='ping!')
     async def ping(self):
