@@ -43,7 +43,7 @@ async def on_message(message):
 # Command error
 @client.event
 async def on_command_error(error, context):
-    await client.send_message(context.message.channel, 'Oops! No can do!')
+    await client.send_message(context.message.channel, 'Oops, something is wrong!\n```\n' + repr(error) + '\n```')
     
 # Reloading extensions
 @client.command(description='Reloads extensions. Usage: /reload [extension_list]')

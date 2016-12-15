@@ -12,18 +12,15 @@ class MusicPlayer:
     @commands.command(pass_context=True)
     async def play(self, ctx, yt_url : str = None):
         if not yt_url is None:
-            try:
-                # If already playing something, disconnect to reset
-                if not self.voice is None:
-                    await self.voice.disconnect()
-                    self.voice = None
-                
-                # Start playing
-                self.voice = await self.client.join_voice_channel(ctx.message.author.voice_channel)
-                player = await self.voice.create_ytdl_player(yt_url, ytdl_options={'format': 'worst', 'audioformat': 'mp3'})
-                player.start()
-            except Exception as e:
-                await client.send_message(message.channel, 'Err:\n```\n' + str(e) + '```')
+            # If already playing something, disconnect to reset
+            if not self.voice is None:
+                await self.voice.disconnect()
+                self.voice = None
+            
+            # Start playing
+            self.voice = await self.client.join_voice_channel(ctx.message.author.voice_channel)
+            player = await self.voice.create_ytdl_player(yt_url)
+            player.start()
         else:
             await self.client.say('Usage: /play youtube_url')
     
