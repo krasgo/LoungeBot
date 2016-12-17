@@ -104,30 +104,6 @@ def setup(client):
     client.add_cog(General(client))
 '''    
     async def handle_msg(self):
-        # Exquisite Corpse
-        if args[0] == '/ec':
-            global ec_game
-            
-            # End the game if it was finished
-            if not ec_game is None and ec_game.killme == True:
-                ec_game = None
-                
-            # Start the game if you gave 3 users
-            if ec_game is None:
-                players = message.mentions
-                if len(players) == 3:
-                    ec_game = ec.ECorpse(players[0], players[1], players[2])
-                    await ec_game.welcome(message, client)
-                else:
-                    await client.send_message(message.channel, 'I want three players!')
-            else:
-                # End the game if it was started
-                if len(args) == 2 and args[1] == 'end':
-                    await client.send_message(message.channel, 'Game ended!')
-                    ec_game = None
-                # Allow people to input answers
-                else:
-                    await ec_game.input_answer(message, client, message.author)
 
         # Survey
         if args[0] == '/survey':
@@ -165,47 +141,6 @@ def setup(client):
                 err_msg = 'Err:\n```\n'
                 err_msg += str(e) + '```'
                 await client.send_message(message.channel, err_msg)
-        
-        # Gets a random imgur link (that hopefully works)
-        if args[0] == '/imgur':
-            try:
-                imgur_host = "http://i.imgur.com/"
-                imgur_suffix = '.png'
-                
-                max_attempts = 20
-                img_url_len = 5 if args[0] == '/imgur' else 6
-                
-                msg_urls = ''
-                
-                # Check the number of attempts requested
-                attempts = 1
-                if len(args) > 1 and int(args[1]) > 1:
-                    attempts = int(args[1])
-                    if attempts > max_attempts:
-                        attempts = max_attempts
-                        msg_urls += 'Sorry man, only ' + max_attempts + ' links allowed (nik doesn\'t want you stressing out his pi like that)\n'
-                
-                await client.send_message(message.channel, 'Loading...')
-                
-                # Get that number of links
-                i = 0
-                while i < attempts:
-                    imgur_path = imgur_host 
-                    for j in range(img_url_len):
-                        imgur_path += random.choice(string.ascii_letters + string.digits)
-                    imgur_path += imgur_suffix
-                    r = requests.get(imgur_path)
-                    
-                    if len(r.history) is 0:
-                        msg_urls += str(imgur_path) + '\n'
-                    else:
-                        attempts += 1
-                    i += 1
-                    r.history = []
-                await client.send_message(message.channel, msg_urls)
-            except Exception as e:
-                err_msg = 'Err:\n```\n' + str(e) + '```'
-                await client.send_message(message.channel, err_msg)
 
         if args[0] == '/pretend':
             try:
@@ -235,8 +170,4 @@ def setup(client):
             response = requests.get(word_site)
             WORDS = response.content.splitlines()
             await client.send_message(message.channel, random.choice(WORDS))
-                
-        # Removes your message (testing purposes)
-        if args[0] == '/remove':
-            await client.delete_message(message)
 '''
