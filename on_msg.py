@@ -7,6 +7,8 @@ import string
 import random
 import bot_info
 import requests
+from io import StringIO
+import sys
 
 ec_game = None
 survey_inst = None
