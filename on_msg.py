@@ -94,14 +94,14 @@ class General:
             global survey_inst 
 
             if not survey_inst is None and not survey_inst.running:
-                self.client.say("survey_inst == None, not running")
+                await self.client.say("survey_inst == None, not running")
                 #survey_inst = None
             if survey_inst is None and len(args) > 0 and args[0] == '-start':
-                self.client.say("survey_inst == None, -start")
+                await self.client.say("survey_inst == None, -start")
                 #survey_inst = survey.Survey(message)
                 #await survey_inst.prompt(message, client)
             elif survey_inst is not None and len(args) > 0 and args[0] == '-end':
-                self.client.say("survey_inst running, -end")
+                await self.client.say("survey_inst running, -end")
                 #if survey_inst.surveyor is message.author:
                 #    await survey_inst.end(message, client)
                 #    survey_inst = None
@@ -111,12 +111,12 @@ class General:
                 #            "No. Only the user who asked the " + \
                 #            "question can end it")
             elif survey_inst is not None and len(args) > 0 and args[1] == '-start':
-                self.client.say("survey_inst running, -start")
+                await self.client.say("survey_inst running, -start")
                 #await client.delete_message(message)
                 #await client.send_message(message.channel, 
                 #        "A question is already being asked.")
             elif survey_inst is not None and len(args) > 0: 
-                self.client.say("survey_inst running, response to be received")
+                await self.client.say("survey_inst running, response to be received")
                 #    await survey_inst.response(message, client)
 
             else:
