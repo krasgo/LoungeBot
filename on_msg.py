@@ -86,8 +86,8 @@ class General:
             await self.client.say('Err:\n```\n' + str(e) + '```')
 
     # Chat survey
-    @commands.command(description='Sends a survey to the chat for members " + \
-            "to answer. Usage: /survey (-start [question], -end)')
+    @commands.command(description='Sends a survey to the chat for members ' + \
+            'to answer. Usage: /survey (-start [question], -end)')
     async def survey(self, *, args_str : str = None):
         try:
             args = args_str.split() if args_str != None else [""]
