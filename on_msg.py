@@ -104,7 +104,7 @@ class General:
     @commands.command(description='Sends a survey to the chat for members " + \
             "to answer. Usage: /survey (-start [question], -end)')
     async def survey(self, *, param : str = None):
-            await self.client.say('Survey! ' + param '. Test!')
+            await self.client.say('Survey! ' + param + '. Test!')
 
 def setup(client):
     client.add_cog(General(client))
