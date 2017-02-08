@@ -103,8 +103,44 @@ class General:
     # Chat survey
     @commands.command(description='Sends a survey to the chat for members " + \
             "to answer. Usage: /survey (-start [question], -end)')
-    async def survey(self, *, param : str = None):
-            await self.client.say('Survey! ' + param + '. Test!')
+    async def survey(self, *, args_str : str = None):
+        try:
+            args = args_str.split()
+            # global survey_inst (until that is done)
+
+            if not survey_inst is None and not survey_inst.running:
+                self.client.say("survey_inst == None, not running")
+                #survey_inst = None
+            if survey_inst is None and len(args) > 0 and args[0] == '-start':
+                self.client.say("survey_inst == None, -start")
+                #survey_inst = survey.Survey(message)
+                #await survey_inst.prompt(message, client)
+            elif survey_inst is not None and len(args) > 0 and args[0] == '-end':
+                self.client.say("survey_inst running, -end")
+                #if survey_inst.surveyor is message.author:
+                #    await survey_inst.end(message, client)
+                #    survey_inst = None
+                #else:
+                #    await client.delete_message(message)
+                #    await self.client.say( 
+                #            "No. Only the user who asked the " + \
+                #            "question can end it")
+            elif survey_inst is not None and len(args) > 0 and args[1] == '-start':
+                self.client.say("survey_inst running, -start")
+                #await client.delete_message(message)
+                #await client.send_message(message.channel, 
+                #        "A question is already being asked.")
+            elif survey_inst is not None and len(args) > 0: 
+                self.client.say("survey_inst running, response to be received")
+                #    await survey_inst.response(message, client)
+
+            else:
+                await self.client.say(
+                        "Usage:\n\t`/survey -start [question]` to ask a question" + \
+                                "\n\t`/survey [response]`  to respond " + \
+                                "\n\t`/survey -end` to show results")
+        except Exception as e:
+            await self.client.say('Err:\n```\n' + str(e) + '```')
 
 def setup(client):
     client.add_cog(General(client))
