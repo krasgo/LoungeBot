@@ -2,8 +2,6 @@ import discord
 import asyncio
 from discord.ext import commands
 import urllib.request
-import subprocess
-from subprocess import Popen
 import youtube_dl
 import string
 import random
@@ -21,19 +19,6 @@ class General:
     @commands.command(description='ping!')
     async def ping(self):
         await self.client.say('coucou !')
-    
-    # Do git pull
-    @commands.command(description='Runs "git pull" on the computer I\'m running on')
-    @commands.check(bot_info.is_owner)
-    async def pull(self):
-        try:
-            p = Popen(['git', 'pull'],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT)
-                
-            await self.client.say('Ran git pull!')
-        except Exception as e:
-            await self.client.say('Error:\n```\n' + str(e) + '```')
         
     # Change profile icon
     @commands.command(description='Changes the avatar. Usage: /chg_avatar (local | url) path')
@@ -144,72 +129,3 @@ class General:
 
 def setup(client):
     client.add_cog(General(client))
-'''    
-    async def handle_msg(self):
-
-        # Survey
-        if args[0] == '/survey':
-            try:
-                global survey_inst
-                
-                if not survey_inst is None and not survey_inst.running:
-                    survey_inst = None
-
-                if survey_inst is None and len(args) > 1 and args[1] == '-start':
-                    survey_inst = survey.Survey(message)
-                    await survey_inst.prompt(message, client)
-                elif survey_inst is not None and len(args) > 1 and args[1] == '-end':
-                    if survey_inst.surveyor is message.author:
-                        await survey_inst.end(message, client)
-                        survey_inst = None
-                    else:
-                        await client.delete_message(message)
-                        await client.send_message(message.channel,
-                                "No. Only the user who asked the " + \
-                                "question can end it")
-                elif survey_inst is not None and len(args) > 1 and args[1] == '-start':
-                    await client.delete_message(message)
-                    await client.send_message(message.channel, 
-                            "A question is already being asked.")
-                elif survey_inst is not None and len(args) > 1: 
-                        await survey_inst.response(message, client)
-
-                else:
-                    await client.send_message(message.channel, 
-                            "Usage:\n\t`/survey -start [question]` to ask a question" + \
-                                    "\n\t`/survey [response]`  to respond " + \
-                                    "\n\t`/survey -end` to show results")
-            except Exception as e:
-                err_msg = 'Err:\n```\n'
-                err_msg += str(e) + '```'
-                await client.send_message(message.channel, err_msg)
-
-        if args[0] == '/pretend':
-            try:
-                await client.delete_message(message)
-                class pt:
-                    member = message.mentions[0]
-                    name = member.display_name
-                    colour = member.colour
-                    msg_len = len('/pretend   <>' + member.id)
-                    msg = message.content[msg_len:]
-                class bot:
-                    name = client.user.display_name
-                    member = message.server.me
-                    colour = message.server.me.colour
-                    role = message.server.me.top_role
-                
-                await client.change_nickname(bot.member, pt.name)
-                await client.send_message(message.channel, pt.msg)
-                await client.change_nickname(bot.member, bot.name)
-
-            except Exception as e:
-                err_msg = 'Err:\n```\n' + str(e) + '```'
-                await client.send_message(message.channel, err_msg)
-
-        if args[0] == '/gimg':
-            word_site = "http://svnweb.freebsd.org/csrg/share/dict/words?view=co&content-type=text/plain"
-            response = requests.get(word_site)
-            WORDS = response.content.splitlines()
-            await client.send_message(message.channel, random.choice(WORDS))
-'''
