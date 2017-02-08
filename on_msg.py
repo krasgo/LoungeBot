@@ -100,6 +100,12 @@ class General:
         except Exception as e:
             await self.client.say('Err:\n```\n' + str(e) + '```')
 
+    # Chat survey
+    @commands.command(description='Sends a survey to the chat for members " + \
+            "to answer. Usage: /survey (-start [question], -end)')
+    async def survey(self):
+            await self.client.say('Survey!')
+
 def setup(client):
     client.add_cog(General(client))
 '''    
