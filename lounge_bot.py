@@ -6,8 +6,10 @@ import bot_info
 import sys
 import command_example
 
+isBot = True
+
 extensions = ['on_msg', 'survey', 'command_example', 'music_player', 'games']
-client = commands.Bot(command_prefix='/', description='Here you go! All my commands!')
+client = commands.Bot(command_prefix='/', description='Here you go! All my commands!', self_bot=(not isBot))
 
 # Loads extensions, returns string saying what reloaded
 def reload_extensions(exs):
@@ -57,4 +59,4 @@ async def reload(*, exs : str = None):
     await client.say(module_msg)
 
 # Start the bot
-client.run(bot_info.data['login'])
+client.run(bot_info.data['login'], bot=isBot)
