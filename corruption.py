@@ -6,21 +6,27 @@ from io import StringIO
 import sys
 import signal
 
+def interrupt():
+    raise Exception()
+        
 class Corruption:
     def __init__(self, client):
         self.client = client
-
+        self.timeout_length = 10
+    
     # Eval!
     @commands.command(description='Use with care please')
     async def eval(self, *, cmd_str : str = None):
-
         signal.signal(signal.SIGALRM, interrupt)
-        signal.alarm(10) 
-      
+        signal.alarm(self.timeout_length) 
+        
+        output = None
         try:
             output = eval(str(cmd_str))
-        except Exception:
-            print("Timeout!")
+        except Exception as e:
+            output = "Timeout!"
+        finally:
+            signal.alarm(0)
 
         await self.client.say('```\n' + str(output) + '\n```')
     
@@ -28,15 +34,22 @@ class Corruption:
     @commands.command(description='oh NO!!!! dont do it man!!!')
     @commands.check(bot_info.is_owner)
     async def botexec(self, *, cmd_str : str = None):
+        signal.signal(signal.SIGALRM, interrupt)
+        signal.alarm(self.timeout_length) 
+        
         old_stdout = sys.stdout
         redirected_output = sys.stdout = StringIO()
-        exec(str(cmd_str))
+        
+        try:
+            exec(str(cmd_str))
+        except Exception as e:
+            print("Timeout!")
+        finally:
+            signal.alarm(0)
+            
         sys.stdout = old_stdout
         
         await self.client.say('```\n' + redirected_output.getvalue() + '\n```')
-
-    def interrupt(self):
-        raise Exception("")
         
 def setup(client):
     client.add_cog(Corruption(client))
