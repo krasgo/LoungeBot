@@ -105,8 +105,8 @@ class General:
             "to answer. Usage: /survey (-start [question], -end)')
     async def survey(self, *, args_str : str = None):
         try:
-            args = args_str.split()
-            # global survey_inst (until that is done)
+            if len(args) args = args_str.split() else args = ""
+            global survey_inst 
 
             if not survey_inst is None and not survey_inst.running:
                 self.client.say("survey_inst == None, not running")
