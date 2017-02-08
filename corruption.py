@@ -19,8 +19,8 @@ class Corruption:
       
         try:
             output = eval(str(cmd_str))
-        except Exception, e:
-            print (e)
+        except Exception:
+            print("Timeout!")
 
         await self.client.say('```\n' + str(output) + '\n```')
     
@@ -36,8 +36,7 @@ class Corruption:
         await self.client.say('```\n' + redirected_output.getvalue() + '\n```')
 
     def interrupt(self):
-        print("This command is taking too long!")
-        raise Exception("Timeout")
+        raise Exception("")
         
 def setup(client):
     client.add_cog(Corruption(client))
