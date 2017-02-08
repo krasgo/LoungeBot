@@ -20,7 +20,7 @@ class General:
     # Ping!
     @commands.command(description='ping!')
     async def ping(self):
-        await self.client.say('miaou!')
+        await self.client.say('coucou !')
     
     # Do git pull
     @commands.command(description='Runs "git pull" on the computer I\'m running on')
