@@ -5,6 +5,7 @@ import bot_info
 from io import StringIO
 import sys
 import signal
+import math
 
 class TimeoutError(Exception):
     pass
