@@ -6,8 +6,11 @@ from io import StringIO
 import sys
 import signal
 
+class TimeoutError(Exception):
+    pass
+
 def interrupt():
-    raise Exception()
+    raise TimeoutError()
         
 class Corruption:
     def __init__(self, client):
@@ -23,7 +26,7 @@ class Corruption:
         output = None
         try:
             output = eval(str(cmd_str))
-        except Exception as e:
+        except TimeoutError as e:
             output = "Timeout!"
         finally:
             signal.alarm(0)
@@ -42,7 +45,7 @@ class Corruption:
         
         try:
             exec(str(cmd_str))
-        except Exception as e:
+        except TimeoutError as e:
             print("Timeout!")
         finally:
             signal.alarm(0)
