@@ -87,7 +87,7 @@ class General:
 
     # Chat survey
     @commands.command(description='Sends a survey to the chat for members ' + \
-            'to answer. Usage: /survey (-start [question], -end)')
+            'to answer. Usage: /survey (-start [question], [response], -end)')
     async def survey(self, *, args_str : str = None):
         try:
             args = args_str.split() if args_str != None else [""]
