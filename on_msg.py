@@ -90,7 +90,7 @@ class General:
             "to answer. Usage: /survey (-start [question], -end)')
     async def survey(self, *, args_str : str = None):
         try:
-            args = args_str.split() if len(args_str) else [""]
+            args = args_str.split() if args_str != None else [""]
             global survey_inst 
 
             if not survey_inst is None and not survey_inst.running:
