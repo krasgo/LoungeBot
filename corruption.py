@@ -6,6 +6,12 @@ from io import StringIO
 import sys
 import signal
 import math
+from enum import Enum
+
+class FormatType(Enum):
+    MONO = 0
+    NORM = 1
+    EMBD = 2
 
 class TimeoutError(Exception):
     pass
@@ -24,6 +30,7 @@ class Corruption:
         signal.signal(signal.SIGALRM, interrupt)
         signal.alarm(self.timeout_length) 
         
+        # Get output
         output = None
         try:
             output = eval(str(cmd_str))
@@ -35,12 +42,31 @@ class Corruption:
         await self.client.say('```\n' + str(output) + '\n```')
     
     # oh no exec
-    @commands.command(description='oh NO!!!! dont do it man!!!')
+    @commands.command(description='oh NO!!!! dont do it man!!!\n ' + \
+            'begin script with -n for no monospace, -e for embed style')
     @commands.check(bot_info.is_owner)
     async def botexec(self, *, cmd_str : str = None):
         signal.signal(signal.SIGALRM, interrupt)
-        signal.alarm(self.timeout_length) 
+        signal.alarm(self.timeout_length)
         
+        cmd_str = cmd_str.strip()
+        
+        # By default, text is monospaced with ```
+        format_type = FormatType.MONO
+        
+        # No monospace, no embed, just plain
+        if(cmd_str.startswith('-n')):
+            format_type = FormatType.NORM
+            cmd_str = cmd_str[2:]
+        
+        # Embed
+        if(cmd_str.startswith('-e')):
+            format_type = FormatType.EMBD
+            cmd_str = cmd_str[2:]
+        
+        cmd_str = cmd_str.strip()
+        
+        # Exec and get the output
         old_stdout = sys.stdout
         redirected_output = sys.stdout = StringIO()
         
@@ -53,7 +79,14 @@ class Corruption:
             
         sys.stdout = old_stdout
         
-        await self.client.say('```\n' + redirected_output.getvalue() + '\n```')
+        # Print the output
+        if(format_type == FormatType.MONO):
+            await self.client.say('```\n' + redirected_output.getvalue() + '\n```')
+        elif(format_type == FormatType.NORM):
+            await self.client.say(redirected_output.getvalue())
+        elif(format_type == FormatType.EMBD):
+            em = discord.Embed(description=redirected_output.getvalue(), colour=0x32CD32)
+            await self.client.say(embed=em)
         
 def setup(client):
     client.add_cog(Corruption(client))
