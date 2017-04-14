@@ -8,7 +8,7 @@ import command_example
 
 isBot = True
 
-extensions = ['on_msg', 'survey', 'command_example', 'music_player', 'games', 'git', 'corruption']
+extensions = ['on_msg', 'survey', 'command_example', 'music_player', 'games', 'git', 'corruption', 'translate']
 client = commands.Bot(command_prefix='/', description='Here you go! All my commands!', self_bot=(not isBot))
 
 # Loads extensions, returns string saying what reloaded
