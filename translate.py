@@ -61,11 +61,11 @@ class Translate:
             'Japanese']
             
     @commands.command(description="Translate to something")
-    async def translate(self, *, english : str = None):
+    async def translate(self, *, lang_input : str = None):
         yandex_url = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
         yandex_url += '?key=' + self.key
-        yandex_url += '&text=' + english
-        yandex_url += '&lang=ru'
+        yandex_url += '&text=' + lang_input
+        yandex_url += '&lang=en'
         r = requests.get(yandex_url)
         translation = r.json()['text']
         await self.client.say(translation[0])
@@ -76,7 +76,7 @@ class Translate:
         trans_history = ''
         
         if amount < 1:
-            amount = 0
+            amount = 1
         if amount > 20:
             amount = 20
         
