@@ -101,7 +101,6 @@ class Translate:
         r = requests.get(yandex_url)
         translation = r.json()['text'][0]
         
-        print()
         await self.client.say('**' + translation + '**\nTranslation order: ' + trans_history + 'English')
 
 def setup(client):
