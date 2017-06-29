@@ -25,12 +25,12 @@ class Survey:
                     msg + \
                     "```\nAnswer this question anonymously by typing" + \
                     " `/survey respond` before your response."
-                await self.client.say(bot_msg)
+                await ctx.send(bot_msg)
             else:
                 if self.running:
-                    await self.client.say('A survey is already running!')
+                    await ctx.send('A survey is already running!')
                 else:
-                    await self.client.say('You must ask a question')
+                    await ctx.send('You must ask a question')
         # Responding!
         elif cmd == 'respond':
             if not (msg is None) and self.running:
@@ -38,15 +38,15 @@ class Survey:
                     self.answers.append(msg)
                     await self.client.delete_message(ctx.message)
                     self.member_answered[ctx.message.author] = True
-                    await self.client.say("Response submitted.")
+                    await ctx.send("Response submitted.")
                 else: 
                     await self.client.delete_message(ctx.message)
-                    await self.client.say("You've already submitted a response, " + ctx.message.author.mention)
+                    await ctx.send("You've already submitted a response, " + ctx.message.author.mention)
             else:
                 if self.running:
-                    await self.client.say('You gotta answer the question lmafo')
+                    await ctx.send('You gotta answer the question lmafo')
                 else:
-                    await self.client.say('Nothing to respond to, start a survey with `/survey prompt`!')
+                    await ctx.send('Nothing to respond to, start a survey with `/survey prompt`!')
         # End me!
         elif cmd == 'end':
             if self.running:
@@ -55,11 +55,11 @@ class Survey:
                 bot_msg = "The user has closed the question. Here are the responses:\n" + \
                       '```\n' + "".join(ans) + '```'
                 self.running = False
-                await self.client.say(bot_msg)
+                await ctx.send(bot_msg)
             else:
-                await self.client.say('Nothing to end, start a survey with `/survey prompt`!')
+                await ctx.send('Nothing to end, start a survey with `/survey prompt`!')
         else:
-            await self.client.say('Invalid command, use `/survey prompt`, `/survey respond`, or `/survey end`')
+            await ctx.send('Invalid command, use `/survey prompt`, `/survey respond`, or `/survey end`')
 
 def setup(client):
     client.add_cog(Survey(client))

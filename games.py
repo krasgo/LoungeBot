@@ -13,9 +13,9 @@ class ExquisiteCorpse:
         players = ctx.message.mentions
         
         if len(players) != 3:
-            await self.client.say('Need three mentions!')
+            await ctx.send('Need three mentions!')
         else:
-            await self.client.say('ec working!')
+            await ctx.send('ec working!')
     
     '''
         if args[0] == '/ec':

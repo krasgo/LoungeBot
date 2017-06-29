@@ -22,16 +22,16 @@ class MusicPlayer:
             player = await self.voice.create_ytdl_player(yt_url)
             player.start()
         else:
-            await self.client.say('Usage: /play youtube_url')
+            await ctx.send('Usage: /play youtube_url')
     
     # Disconnect the bot from the voice chat
-    @commands.command()
+    @commands.command(pass_context=True)
     async def play_leave(self):
         try:
             await self.voice.disconnect()
             self.voice = None
         except Exception as e:
-            await self.client.say('Err:\n```\n' + str(e) + '\n```')
+            await ctx.send('Err:\n```\n' + str(e) + '\n```')
 
 def setup(client):
     client.add_cog(MusicPlayer(client))

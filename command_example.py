@@ -6,9 +6,9 @@ class ExampleClass:
     def __init__(self, client):
         self.client = client
     
-    @commands.command()
-    async def example_cmd(self):
-        await self.client.say('i did it! example_cmd!')
+    @commands.command(pass_context=True)
+    async def example_cmd(self, ctx):
+        await ctx.send('i did it! example_cmd!')
 
 def setup(client):
     client.add_cog(ExampleClass(client))

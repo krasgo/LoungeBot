@@ -18,38 +18,38 @@ class General:
         self.client = client
         
     # Ping!
-    @commands.command(description='ping!')
-    async def ping(self):
-        await self.client.say('coucou !')
+    @commands.command(description='ping!', pass_context=True)
+    async def ping(self, pass_context=True):
+        await ctx.send('coucou !')
         
     # Change profile icon
-    @commands.command(description='Changes the avatar. Usage: /chg_avatar (local | url) path')
-    async def chg_avatar(self, path_type : str = None, *, path : str = None):
+    @commands.command(description='Changes the avatar. Usage: /chg_avatar (local | url) path', pass_context=True)
+    async def chg_avatar(self, ctx, path_type : str = None, *, path : str = None):
         if (path_type == 'url' or path_type == 'local') and not path is None:
             try:
                 # URL
                 if path_type == 'url':
                     a = urllib.request.urlopen(path).read()
                     await self.client.edit_profile(avatar=a)
-                    await self.client.say('Avatar changed!')
+                    await ctx.send('Avatar changed!')
                 # Local
                 elif path_type == 'local':
                     with open(path, 'rb') as a:
                         await self.client.edit_profile(avatar=(a.read()))
-                    await self.client.say('Avatar changed!')
+                    await ctx.send('Avatar changed!')
             except Exception as e:
-                await self.client.say('Error:\n```\n' + str(e) + '\n```')
+                await ctx.send('Error:\n```\n' + str(e) + '\n```')
         else:
-            await self.client.say('Usage: /chg_avatar (local | url) path')
+            await ctx.send('Usage: /chg_avatar (local | url) path')
     
     # Clear
-    @commands.command(description='Clears the chat')
-    async def clear(self):
-        await self.client.say('.' + '\n' * 100 + '.')
+    @commands.command(description='Clears the chat', pass_context=True)
+    async def clear(self, ctx):
+        await ctx.send('.' + '\n' * 100 + '.')
     
     # Random imgur links
-    @commands.command(description='Get random imgur links. Usage: /imgur [amount]')
-    async def imgur(self, amount : int = 1):
+    @commands.command(description='Get random imgur links. Usage: /imgur [amount]', pass_context=True)
+    async def imgur(self, ctx, amount : int = 1):
         try:
             imgur_host = 'http://i.imgur.com/'
             imgur_suffix = '.png'
@@ -66,7 +66,7 @@ class General:
             elif amount < 1:
                 amount = 1
             
-            await self.client.say('Loading...')
+            await ctx.send('Loading...')
             
             # Get the requested number of links
             i = 0
@@ -83,9 +83,9 @@ class General:
                     amount += 1
                 i += 1
                 r.history = []
-            await self.client.say(msg_urls)
+            await ctx.send(msg_urls)
         except Exception as e:
-            await self.client.say('Err:\n```\n' + str(e) + '```')
+            await ctx.send('Err:\n```\n' + str(e) + '```')
 
 def setup(client):
     client.add_cog(General(client))

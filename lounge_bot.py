@@ -44,19 +44,19 @@ async def on_message(message):
 
 # Command error
 @client.event
-async def on_command_error(error, context):
-    await client.send_message(context.message.channel, 'Oops, something is wrong!\n```\n' + repr(error) + '\n```')
+async def on_command_error(ctx, error):
+    await ctx.send('Oops, something is wrong!\n```\n' + repr(error) + '\n```')
     
 # Reloading extensions
-@client.command(description='Reloads extensions. Usage: /reload [extension_list]')
-@commands.check(bot_info.is_owner)
-async def reload(*, exs : str = None):
+@client.command(description='Reloads extensions. Usage: /reload [extension_list]', pass_context=True)
+@bot_info.is_owner()
+async def reload(ctx, *, exs : str = None):
     module_msg = 'd' # d
     if(exs is None):
         module_msg = reload_extensions(extensions)
     else:
         module_msg = reload_extensions(exs.split())
-    await client.say(module_msg)
+    await ctx.send(module_msg)
 
 # Start the bot
 client.run(bot_info.data['login'], bot=isBot)

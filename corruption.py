@@ -7,6 +7,7 @@ import sys
 import signal
 import math
 from enum import Enum
+import bot_info
 
 class FormatType(Enum):
     MONO = 0
@@ -25,8 +26,8 @@ class Corruption:
         self.timeout_length = 10
     
     # Eval!
-    @commands.command(description='Use with care please')
-    async def eval(self, *, cmd_str : str = None):
+    @commands.command(description='Use with care please', pass_context=True)
+    async def eval(self, ctx, *, cmd_str : str = None):
         signal.signal(signal.SIGALRM, interrupt)
         signal.alarm(self.timeout_length) 
         
@@ -39,13 +40,13 @@ class Corruption:
         finally:
             signal.alarm(0)
 
-        await self.client.say('```\n' + str(output) + '\n```')
+        await ctx.send('```\n' + str(output) + '\n```')
     
     # oh no exec
     @commands.command(description='oh NO!!!! dont do it man!!!\n ' + \
-            'begin script with -n for no monospace, -e for embed style')
-    @commands.check(bot_info.is_owner)
-    async def botexec(self, *, cmd_str : str = None):
+            'begin script with -n for no monospace, -e for embed style', pass_context=True)
+    @bot_info.is_owner()
+    async def botexec(self, ctx, *, cmd_str : str = None):
         signal.signal(signal.SIGALRM, interrupt)
         signal.alarm(self.timeout_length)
         
@@ -81,12 +82,12 @@ class Corruption:
         
         # Print the output
         if(format_type == FormatType.MONO):
-            await self.client.say('```\n' + redirected_output.getvalue() + '\n```')
+            await ctx.send('```\n' + redirected_output.getvalue() + '\n```')
         elif(format_type == FormatType.NORM):
-            await self.client.say(redirected_output.getvalue())
+            await ctx.send(redirected_output.getvalue())
         elif(format_type == FormatType.EMBD):
             em = discord.Embed(description=redirected_output.getvalue(), colour=0x32CD32)
-            await self.client.say(embed=em)
+            await ctx.send(embed=em)
         
 def setup(client):
     client.add_cog(Corruption(client))

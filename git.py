@@ -10,17 +10,17 @@ class Git:
         self.client = client
     
     # Do git pull
-    @commands.command(description='Runs "git pull" on the computer I\'m running on')
-    @commands.check(bot_info.is_owner)
+    @commands.command(description='Runs "git pull" on the computer I\'m running on', pass_context=True)
+    @bot_info.is_owner()
     async def pull(self):
         try:
             p = Popen(['git', 'pull'],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT)
                 
-            await self.client.say('Ran git pull!')
+            await ctx.send('Ran git pull!')
         except Exception as e:
-            await self.client.say('Error:\n```\n' + str(e) + '```')
+            await ctx.send('Error:\n```\n' + str(e) + '```')
     
 def setup(client):
     client.add_cog(Git(client))

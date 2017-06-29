@@ -17,8 +17,8 @@ class Magic8Ball:
             'heck YEAH']
             
     
-    @commands.command(description="Know the future")
-    async def magic8ball(self, *, question : str = None):
-        await self.client.say(random.choice(self.answers))
+    @commands.command(description="Know the future", pass_context=True)
+    async def magic8ball(self, ctx, *, question : str = None):
+        await ctx.send(random.choice(self.answers))
 def setup(client):
     client.add_cog(Magic8Ball(client))
