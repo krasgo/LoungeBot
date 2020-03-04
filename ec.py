@@ -12,26 +12,26 @@ class ECorpse:
         # Dictionary of all the answers
         self.answers = { self.users[0]: None, self.users[1]: None, self.users[2]: None }
     
-    async def welcome(self, message, client):
+    async def welcome(self, message, bot):
         welcome_message = 'Game started!\n' + '-' * 25 + \
                         '\n**Noun:** ' + self.users[0].mention + \
                         '\n**Verb:** ' + self.users[1].mention + \
                         '\n**Reason:** ' + self.users[2].mention + \
                         '\n' + '-' * 25 + '\nTo enter an answer, type `/ec your answer`'
-        await client.send_message(message.channel, welcome_message)
+        await bot.send_message(message.channel, welcome_message)
     
-    async def input_answer(self, message, client, user):
+    async def input_answer(self, message, bot, user):
         if user in self.answers:
             # Record an answer
             if self.answers[user] is None:
                 self.answers[user] = message.content[4:]
-                await client.delete_message(message)
-                await client.send_message(message.channel, user.mention + ' has submitted their answer!')
+                await bot.delete_message(message)
+                await bot.send_message(message.channel, user.mention + ' has submitted their answer!')
             # Say they already recorded an answer
             else:
-                await client.send_message(message.channel, 'You already gave an answer')
+                await bot.send_message(message.channel, 'You already gave an answer')
         else:
-            await client.send_message(message.channel, "You're not playing")
+            await bot.send_message(message.channel, "You're not playing")
         
         # Check if all answers were given
         all_answered = True
@@ -45,4 +45,4 @@ class ECorpse:
             end_message += self.answers[self.users[1]] + '\n'
             end_message += self.answers[self.users[2]] + '```\n'
             killme = True
-            await client.send_message(message.channel, end_message)
+            await bot.send_message(message.channel, end_message)

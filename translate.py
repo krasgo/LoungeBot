@@ -5,9 +5,9 @@ import bot_info
 import requests
 import random
 
-class Translate:
-    def __init__(self, client):
-        self.client = client
+class Translate(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
         self.key = bot_info.get_yandex_translate_key()
         self.langs = ['ar',
             'be', 
@@ -60,7 +60,7 @@ class Translate:
             'Esperanto',
             'Japanese']
             
-    @commands.command(description="Translate to something", pass_context=True)
+    @commands.command(description="Translate to English", pass_context=True)
     async def translate(self, ctx, *, lang_input : str = None):
         yandex_url = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
         yandex_url += '?key=' + self.key
@@ -71,9 +71,9 @@ class Translate:
         await ctx.send(translation[0])
     
     @commands.command(description="Translate back and forth", pass_context=True)
-    async def transwitch(self, ctx, amount : int, *, english : str = None):
+    async def translatemix(self, ctx, amount : int, *, english : str = None):
         translation = english
-        trans_history = ''
+        trans_history = '__Translations:__\n'
         
         if amount < 1:
             amount = 1
@@ -81,11 +81,12 @@ class Translate:
             amount = 20
         
         await ctx.send("Loading...")
-            
+        prev_lang_i = -1
+        lang_i = -1
         for i in range(amount):
-            lang_i = random.choice(range(len(self.langs)))
+            while(prev_lang_i == lang_i):
+                lang_i = random.choice(range(len(self.langs)))
             lang = self.langs[lang_i]
-            trans_history += self.langs_friendly[lang_i] + ' '
             
             yandex_url = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
             yandex_url += '?key=' + self.key
@@ -93,6 +94,8 @@ class Translate:
             yandex_url += '&lang=' + lang
             r = requests.get(yandex_url)
             translation = r.json()['text'][0]
+            trans_history += '**{}**: {}\n'.format(self.langs_friendly[lang_i], translation)
+            prev_lang_i = lang_i
             
         yandex_url = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
         yandex_url += '?key=' + self.key
@@ -100,8 +103,9 @@ class Translate:
         yandex_url += '&lang=en'
         r = requests.get(yandex_url)
         translation = r.json()['text'][0]
+        trans_history += '\n__Final translation to English:__\n**{}**'.format(translation)
         
-        await ctx.send('**' + translation + '**\nTranslation order: ' + trans_history + 'English')
+        await ctx.send(trans_history)
 
-def setup(client):
-    client.add_cog(Translate(client))
+def setup(bot):
+    bot.add_cog(Translate(bot))

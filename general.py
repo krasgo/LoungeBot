@@ -13,29 +13,30 @@ import sys
 ec_game = None
 survey_inst = None
 
-class General:
-    def __init__(self, client):
-        self.client = client
+class General(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
         
     # Ping!
     @commands.command(description='ping!', pass_context=True)
-    async def ping(self, pass_context=True):
+    async def ping(self, ctx):
         await ctx.send('coucou !')
         
     # Change profile icon
     @commands.command(description='Changes the avatar. Usage: /chg_avatar (local | url) path', pass_context=True)
+    @bot_info.is_owner()
     async def chg_avatar(self, ctx, path_type : str = None, *, path : str = None):
         if (path_type == 'url' or path_type == 'local') and not path is None:
             try:
                 # URL
                 if path_type == 'url':
                     a = urllib.request.urlopen(path).read()
-                    await self.client.edit_profile(avatar=a)
+                    await self.bot.edit_profile(avatar=a)
                     await ctx.send('Avatar changed!')
                 # Local
                 elif path_type == 'local':
                     with open(path, 'rb') as a:
-                        await self.client.edit_profile(avatar=(a.read()))
+                        await self.bot.edit_profile(avatar=(a.read()))
                     await ctx.send('Avatar changed!')
             except Exception as e:
                 await ctx.send('Error:\n```\n' + str(e) + '\n```')
@@ -87,5 +88,5 @@ class General:
         except Exception as e:
             await ctx.send('Err:\n```\n' + str(e) + '```')
 
-def setup(client):
-    client.add_cog(General(client))
+def setup(bot):
+    bot.add_cog(General(bot))

@@ -20,9 +20,9 @@ class TimeoutError(Exception):
 def interrupt():
     raise TimeoutError()
         
-class Corruption:
-    def __init__(self, client):
-        self.client = client
+class Corruption(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
         self.timeout_length = 10
     
     # Eval!
@@ -70,6 +70,8 @@ class Corruption:
         # Exec and get the output
         old_stdout = sys.stdout
         redirected_output = sys.stdout = StringIO()
+
+        
         
         try:
             exec(str(cmd_str))
@@ -79,15 +81,17 @@ class Corruption:
             signal.alarm(0)
             
         sys.stdout = old_stdout
+
+        output_str = redirected_output.getvalue()[:1950]
         
         # Print the output
         if(format_type == FormatType.MONO):
-            await ctx.send('```\n' + redirected_output.getvalue() + '\n```')
+            await ctx.send('```\n' + output_str + '\n```')
         elif(format_type == FormatType.NORM):
-            await ctx.send(redirected_output.getvalue())
+            await ctx.send(output_str)
         elif(format_type == FormatType.EMBD):
-            em = discord.Embed(description=redirected_output.getvalue(), colour=0x32CD32)
+            em = discord.Embed(description=output_str, colour=0x32CD32)
             await ctx.send(embed=em)
         
-def setup(client):
-    client.add_cog(Corruption(client))
+def setup(bot):
+    bot.add_cog(Corruption(bot))

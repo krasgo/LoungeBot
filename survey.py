@@ -5,9 +5,9 @@ import asyncio
 start_len = len("/survey -start ")
 resp_len = len("/survey ")
 
-class Survey:
-    def __init__(self, client):
-        self.client = client
+class Survey(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
         self.running = False
         self.member_answered = None
         self.answers = []
@@ -17,10 +17,11 @@ class Survey:
         # Asking!
         if cmd == 'prompt':
             if not (msg is None) and not self.running:
-                await self.client.delete_message(ctx.message)
+                #await ctx.message.delete()
+                await ctx.message.delete()
                 self.running = True
                 self.member_answered = {member:False for member 
-                    in ctx.message.server.members}
+                    in ctx.message.guild.members}
                 bot_msg = "A user has submitted a question:```\n" + \
                     msg + \
                     "```\nAnswer this question anonymously by typing" + \
@@ -36,11 +37,11 @@ class Survey:
             if not (msg is None) and self.running:
                 if not self.member_answered[ctx.message.author]:
                     self.answers.append(msg)
-                    await self.client.delete_message(ctx.message)
+                    await ctx.message.delete()
                     self.member_answered[ctx.message.author] = True
                     await ctx.send("Response submitted.")
                 else: 
-                    await self.client.delete_message(ctx.message)
+                    await ctx.message.delete()
                     await ctx.send("You've already submitted a response, " + ctx.message.author.mention)
             else:
                 if self.running:
@@ -51,15 +52,16 @@ class Survey:
         elif cmd == 'end':
             if self.running:
                 ans = [x + "\n\n" for x in self.answers]
-                await self.client.delete_message(ctx.message)
+                await ctx.message.delete()
                 bot_msg = "The user has closed the question. Here are the responses:\n" + \
                       '```\n' + "".join(ans) + '```'
                 self.running = False
+                self.answers = []
                 await ctx.send(bot_msg)
             else:
                 await ctx.send('Nothing to end, start a survey with `/survey prompt`!')
         else:
             await ctx.send('Invalid command, use `/survey prompt`, `/survey respond`, or `/survey end`')
 
-def setup(client):
-    client.add_cog(Survey(client))
+def setup(bot):
+    bot.add_cog(Survey(bot))

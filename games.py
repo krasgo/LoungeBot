@@ -4,12 +4,14 @@ from discord.ext import commands
 
 ec_game = None
 
-class ExquisiteCorpse:
-    def __init__(self, client):
-        self.client = client
+class ExquisiteCorpse(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
         
     @commands.command(pass_context=True)
     async def ec(self, ctx):
+        ctx.send("Feature not yet implemented :(")
+        return
         players = ctx.message.mentions
         
         if len(players) != 3:
@@ -30,18 +32,18 @@ class ExquisiteCorpse:
                 players = message.mentions
                 if len(players) == 3:
                     ec_game = ec.ECorpse(players[0], players[1], players[2])
-                    await ec_game.welcome(message, client)
+                    await ec_game.welcome(message, bot)
                 else:
-                    await client.send_message(message.channel, 'I want three players!')
+                    await bot.send_message(message.channel, 'I want three players!')
             else:
                 # End the game if it was started
                 if len(args) == 2 and args[1] == 'end':
-                    await client.send_message(message.channel, 'Game ended!')
+                    await bot.send_message(message.channel, 'Game ended!')
                     ec_game = None
                 # Allow people to input answers
                 else:
-                    await ec_game.input_answer(message, client, message.author)
+                    await ec_game.input_answer(message, bot, message.author)
                     '''
 
-def setup(client):
-    client.add_cog(ExquisiteCorpse(client))
+def setup(bot):
+    bot.add_cog(ExquisiteCorpse(bot))
