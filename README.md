@@ -9,7 +9,7 @@ A Discord bot I'm making for some spectacular friends. <br>
 * **`/survey <action> <message>`**: Create anonymous surveys with anonymous answers.
   * `/survey prompt Is HTML a programming language?`: to start a survey.
   * `/survey respond Yeah it is!`: to respond to a survey.
-  * `/survey end`: to end a survey (if you started it) and show the results
+  * `/survey end`: to end a survey (if you started it) and show the results.
 
 * **`/translate <message>`**: Translate <message> to English, assuming \<message\> is not in English.
 
@@ -21,7 +21,7 @@ A Discord bot I'm making for some spectacular friends. <br>
 
 * **`/clear`**: Send a long blank message to clear the chat.
 
-* **`/boteval <python_code>`**: Runs `eval(<python_code>)` and prints the output
+* **`/boteval <python_code>`**: Runs `eval(<python_code>)` and prints the output.
 
 * **`/ping`**: pong.
 
@@ -41,7 +41,7 @@ These can only be run by people who are in the owners array in `bot_info.json`!
 * **`/pull`**: Runs `git pull`. This is how Adam made his updates to the bot live.
 - - - -
 ## Installation
-* Install `discord.py` (tested with v1.3.2)
+* Install `discord.py` (tested with v1.3.2).
 * Clone this repo and create a file in it called `bot_info.json`.
   * "owners" are people who have access to restricted commands.
   * Here's what it should look like:
