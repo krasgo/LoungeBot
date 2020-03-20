@@ -123,8 +123,8 @@ class Translate(commands.Cog):
             trans_history = trans_history.split('\n')
             trans_history_parts = ['']
             for l in trans_history:
-                if len(trans_history_parts[-1])+len(l) < 2000:
-                    trans_history_parts[-1] += l
+                if len(trans_history_parts[-1])+len(l+'\n') < 2000:
+                    trans_history_parts[-1] += l+'\n'
                 else:
                     trans_history_parts.append(l)
             for trans_history_part in trans_history_parts:
