@@ -109,7 +109,11 @@ class Translate(commands.Cog):
         yandex_url += '&lang=en'
         r = requests.get(yandex_url)
         translation = r.json()['text'][0]
-        trans_history += '\n__Final translation to English:__\n**{}**'.format(translation)
+        final_part = '\n__Final translation to English:__\n**{}**'.format(translation)
+        if len(trans_history + final_part) >= 2000:
+            trans_history = final_part
+        else:
+            trans_history += final_part
         
         await ctx.send(trans_history)
 
