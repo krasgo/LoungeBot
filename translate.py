@@ -120,7 +120,7 @@ class Translate(commands.Cog):
 
 
         if len(trans_history) > 2000:
-            trans_history.split('\n')
+            trans_history = trans_history.split('\n')
             trans_history_parts = ['']
             for l in trans_history:
                 if len(trans_history_parts[-1])+len(l) < 2000:
