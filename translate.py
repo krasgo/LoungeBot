@@ -118,12 +118,13 @@ class Translate(commands.Cog):
         #    trans_history += final_msg
         trans_history += final_msg
 
-        if len(trans_history) > 2000:
+        #if len(trans_history) > 2000:
                 #for i in range(0, len(trans_history), 2000):
                 #await ctx.send(trans_history[i:min(len(trans_history), i+2000)])
-                ctx.send(trans_history[0:2000])
-        else:
-            await ctx.send(trans_history)
-
+        #        ctx.send(trans_history[0:2000])
+        #else:
+        #    await ctx.send(trans_history)
+        await ctx.send(trans_history)
+        
 def setup(bot):
     bot.add_cog(Translate(bot))
