@@ -55,7 +55,7 @@ class General(commands.Cog):
             imgur_host = 'http://i.imgur.com/'
             imgur_suffix = '.png'
             
-            max_attempts = 20
+            max_attempts = 5
             img_url_len = 5
             
             msg_urls = ''
@@ -63,7 +63,7 @@ class General(commands.Cog):
             # Check the number of attempts requested
             if amount > max_attempts:
                 amount = max_attempts
-                msg_urls += 'Sorry man, only ' + max_attempts + ' links allowed (nik doesn\'t want you stressing out his pi like that)\n'
+                msg_urls += 'Sorry man, only ' + str(max_attempts) + ' links allowed (nik doesn\'t want you stressing out his pi like that)\n'
             elif amount < 1:
                 amount = 1
             

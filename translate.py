@@ -81,17 +81,23 @@ class Translate(commands.Cog):
             amount = 20
         
         await ctx.send("Loading...")
+        used_langs = []
         prev_lang_i = -1
         lang_i = -1
         for i in range(amount):
-            while(prev_lang_i == lang_i):
+            while(prev_lang_i == lang_i or lang_i in used_langs):
                 lang_i = random.choice(range(len(self.langs)))
             lang = self.langs[lang_i]
+            prev_lang = -1 if prev_lang_i == -1 else self.langs[prev_lang_i]
+            used_langs.append(lang_i)
             
             yandex_url = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
             yandex_url += '?key=' + self.key
             yandex_url += '&text=' + translation
-            yandex_url += '&lang=' + lang
+            if prev_lang_i == -1:
+                yandex_url += '&lang=' + lang
+            else:
+                yandex_url += '&lang=' + prev_lang + '-' + lang
             r = requests.get(yandex_url)
             translation = r.json()['text'][0]
             trans_history += '**{}**: {}\n'.format(self.langs_friendly[lang_i], translation)
