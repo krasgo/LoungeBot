@@ -111,13 +111,18 @@ class Translate(commands.Cog):
         translation = r.json()['text'][0]
         #final_part = '\n__Final translation to English:__\n**{}**'.format(translation)
         final_msg = '\n__Final translation to English:__\n**{}**'.format(translation)
-        if len(trans_history + final_msg) >= 2000:
-            used_langs_str = ' -> '.join(map(lambda i: self.langs_friendly[i], used_langs))
-            trans_history = used_langs_str + ' -> English\n{}'.format(final_msg)
+        #if len(trans_history + final_msg) >= 2000:
+        #    used_langs_str = ' -> '.join(map(lambda i: self.langs_friendly[i], used_langs))
+        #    trans_history = used_langs_str + ' -> English\n{}'.format(final_msg)
+        #else:
+        #    trans_history += final_msg
+        trans_history += final_msg
+
+        if len(trans_history) > 2000:
+            for i in range(0, len(trans_history), 2000):
+                await(ctx.send(trans_history[i:min(len(trans_history), i+2000])))
         else:
-            trans_history += final_msg
-        
-        await ctx.send(trans_history)
+            await ctx.send(trans_history)
 
 def setup(bot):
     bot.add_cog(Translate(bot))
