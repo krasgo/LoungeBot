@@ -4,6 +4,7 @@ from discord.ext import commands
 import importlib
 import bot_info
 import sys
+import traceback
 
 extensions = ['general', 'survey', 'music_player', 'games', 'git', 'corruption', 'translate', 'magic8ball']
 bot = commands.Bot(command_prefix=commands.when_mentioned_or('/'), description='Here you go! All my commands!')
@@ -17,7 +18,7 @@ def reload_extensions(exs):
             bot.load_extension(ex)
             module_msg += 'module "{}" reloaded\n'.format(ex)
         except Exception as e:
-            module_msg += 'reloading "{}" failed, error is:```{}```\n'.format(ex, e)
+            module_msg += 'reloading "{}" failed, error is:```{}```\n'.format(ex, traceback.format_exc())
     return module_msg
 
     
