@@ -120,7 +120,7 @@ class Translate(commands.Cog):
 
         if len(trans_history) > 2000:
             for i in range(0, len(trans_history), 2000):
-                await(ctx.send(trans_history[i:(min(len(trans_history), i+2000]))))
+                await(ctx.send(trans_history[i:(min(len(trans_history), i+2000))]))
         else:
             await ctx.send(trans_history)
 
