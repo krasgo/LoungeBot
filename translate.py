@@ -126,7 +126,7 @@ class Translate(commands.Cog):
                 if len(trans_history_parts[-1])+len(l+'\n') < 2000:
                     trans_history_parts[-1] += l+'\n'
                 else:
-                    trans_history_parts.append(l)
+                    trans_history_parts.append(l+'\n')
             for trans_history_part in trans_history_parts:
                 await ctx.send(trans_history_part)
         else:
